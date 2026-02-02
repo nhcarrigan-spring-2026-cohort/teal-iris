@@ -6,6 +6,8 @@ Repository for Team teal-iris - Spring 2026 Cohort. It is structured as a monore
 **Backend**
 * NestJS (Node.js framework)
 * TypeScript
+* pnpm (Package manager)
+* Drizzle (ORM)
 
 **Frontend**
 * Next.js (React framework)
