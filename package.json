@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "prepare": "husky",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "lint": "pnpm --filter backend lint && pnpm --filter frontend lint",
+    "build": "pnpm --filter backend build && pnpm --filter frontend build",
+    "test": "pnpm --filter backend test"
   },
   "devDependencies": {
     "husky": "^9.0.11",
