@@ -95,6 +95,48 @@ The backend uses Drizzle ORM with PostgreSQL. Database configuration is in `apps
 | `pnpm --filter backend drizzle-kit studio` | Open Drizzle Studio GUI |
 
 
+## Commit Messages
+
+This project enforces [Conventional Commits](https://www.conventionalcommits.org/) via **commitlint**. Every commit message must follow this format:
+
+```
+<type>(<scope>): <description>
+```
+
+### Allowed Types
+
+`feat`, `fix`, `chore`, `docs`, `refactor`, `test`, `ci`, `build`, `perf`, `style`, `revert`
+
+### Allowed Scopes
+
+| Scope | Usage |
+|-------|-------|
+| `backend` | Changes in `apps/backend/` |
+| `frontend` | Changes in `apps/frontend/` |
+| `root` | Root config files |
+| `ci` | `.github/workflows/` |
+| `docs` | Documentation files |
+| `docker` | Dockerfiles, `docker-compose.yml` |
+| `deps` | Cross-workspace dependency updates |
+
+### Examples
+
+```bash
+# Valid commits
+feat(backend): add user authentication endpoint
+fix(frontend): resolve hydration mismatch on home page
+chore(root): update ESLint config
+docs(docs): add API usage guide
+ci(ci): add deploy workflow
+
+# Valid but produces a warning (missing scope)
+chore: update dependencies
+
+# Invalid (will be rejected)
+updated stuff               # not conventional format
+feat(api): add endpoint     # invalid scope
+```
+
 ## Making Changes
 
 ### Code Style
@@ -120,7 +162,7 @@ The backend uses Drizzle ORM with PostgreSQL. Database configuration is in `apps
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
+3. Commit your changes (`git commit -m 'feat(backend): add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 

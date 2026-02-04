@@ -10,6 +10,8 @@
     "test": "pnpm --filter backend test"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.4.1",
+    "@commitlint/config-conventional": "^20.4.1",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.10"
   },
