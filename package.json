@@ -10,8 +10,11 @@
     "test": "pnpm --filter backend test"
   },
   "devDependencies": {
+    "@types/pg": "^8.16.0",
+    "drizzle-kit": "^0.31.8",
     "husky": "^9.0.11",
-    "lint-staged": "^15.2.10"
+    "lint-staged": "^15.2.10",
+    "tsx": "^4.21.0"
   },
   "lint-staged": {
     "apps/backend/**/*.{ts,js}": [
@@ -20,5 +23,10 @@
     "apps/frontend/**/*.{ts,tsx,js,jsx}": [
       "pnpm --filter frontend lint"
     ]
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.45.1",
+    "pg": "^8.18.0"
   }
 }
