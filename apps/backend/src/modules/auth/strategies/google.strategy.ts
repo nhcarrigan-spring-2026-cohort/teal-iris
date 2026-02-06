@@ -15,7 +15,14 @@ export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
     const callbackURL =
       process.env.GOOGLE_CALLBACK_URL || "http://localhost:3000/skeleton";
 
-    // Log a warning if any skeleton/default is used
+    super({
+      clientID,
+      clientSecret,
+      callbackURL,
+      scope: ["email", "profile"],
+      passReqToCallback: true,
+    });
+
     if (
       !process.env.GOOGLE_CLIENT_ID ||
       !process.env.GOOGLE_CLIENT_SECRET ||
@@ -33,14 +40,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
         `GoogleStrategy using default placeholder values for: ${missing}`,
       );
     }
-
-    super({
-      clientID,
-      clientSecret,
-      callbackURL,
-      scope: ["email", "profile"],
-      passReqToCallback: true,
-    });
   }
 
   async validate(
