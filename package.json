@@ -10,10 +10,13 @@
     "test": "pnpm --filter backend test"
   },
   "devDependencies": {
-    "@types/pg": "^8.16.0",
-    "drizzle-kit": "^0.31.8",
     "@commitlint/cli": "^20.4.1",
     "@commitlint/config-conventional": "^20.4.1",
+    "@types/bcrypt": "^6.0.0",
+    "@types/passport-jwt": "^4.0.1",
+    "@types/passport-local": "^1.0.38",
+    "@types/pg": "^8.16.0",
+    "drizzle-kit": "^0.31.8",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.10",
     "tsx": "^4.21.0"
@@ -27,8 +30,19 @@
     ]
   },
   "dependencies": {
+    "@nestjs/cli": "^11.0.16",
+    "@nestjs/jwt": "^11.0.2",
+    "@nestjs/passport": "^11.0.5",
+    "bcrypt": "^6.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.3",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.45.1",
+    "joi": "^18.0.2",
+    "next": "16.1.6",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
     "pg": "^8.18.0"
   }
 }
