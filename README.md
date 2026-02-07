@@ -41,4 +41,35 @@ Repository for Team teal-iris - Spring 2026 Cohort. It is structured as a monore
 ├── LICENSE               # Project License
 ├── docker-compose.yml    # Service orchestration
 ├── package.json          # Root configuration & scripts
-└── README.md             # Project documentation
+└── README.md             # Project documentation 
+
+```   
+
+## Project Team
+
+### Project Co-Leads
+
+| Role | Discord | LinkedIn | GitHub |
+| ------ | ------ | ---------- | -------- |
+| Co-Lead | BridgetKas | [LinkedIn](https://www.linkedin.com/in/bridget-namugga-3a1b02166/) | [GitHub](https://github.com/BridgetKas) |
+| Co-Lead | NewSmoke38 | [LinkedIn](https://www.linkedin.com/in/shivani-backend/) | [GitHub](https://github.com/NewSmoke38) |
+
+### Frontend Team
+
+| Role | Discord | LinkedIn | GitHub |
+|------|------|----------|--------|
+| Contributor | Samuell |  —  | [GitHub](https://github.com/TraveledTiger) |
+| Contributor | Sniper |  — | [GitHub](https://github.com/ajiva84) |
+| Contributor | VooDooRe |  —  | [GitHub](https://github.com/nurmukhammad03) |
+| Contributor | DayDayUp23 | [LinkedIn](https://www.linkedin.com/in/william-d-miller-jr) | [GitHub](https://github.com/bijiyiqi2017) |
+
+
+### Backend Team
+
+| Role | Discord | LinkedIn | GitHub |
+|------|------|----------|--------|
+| Contributor | Tihomir| [LinkedIn](https://www.linkedin.com/in/tihomir-manushev-066782b3/) | [GitHub](https://github.com/haraGADygyl) |
+|Contributor | SirLancelot | [LinkedIn](https://www.linkedin.com/in/pragyan-srivastava-ba3b24383/) | [GitHub](https://github.com/SirLancelot-13) |
+|Contributor | abhisar |  —  | [GitHub](https://github.com/abhisar7) |
+|Contributor | RitamJuniorPal |  —  | [GitHub](https://github.com/RitamPal26) |
+|Contributor | Ayushi  |  —  | [GitHub](https://github.com/19-ayushi)|
