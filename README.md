@@ -73,3 +73,6 @@ Repository for Team teal-iris - Spring 2026 Cohort. It is structured as a monore
 |Contributor | abhisar |  —  | [GitHub](https://github.com/abhisar7) |
 |Contributor | RitamJuniorPal |  —  | [GitHub](https://github.com/RitamPal26) |
 |Contributor | Ayushi  |  —  | [GitHub](https://github.com/19-ayushi)|
+## Getting Started
+
+For setup instructions, prerequisites, and development commands, see [CONTRIBUTING.md](CONTRIBUTING.md).
