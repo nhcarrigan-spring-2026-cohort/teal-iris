@@ -44,6 +44,10 @@ Repository for Team teal-iris - Spring 2026 Cohort. It is structured as a monore
 └── README.md             # Project documentation 
 
 ```   
+## Getting Started
+
+For setup instructions, prerequisites, and development commands, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 
 ## Project Team
 
