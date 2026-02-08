@@ -25,8 +25,12 @@
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.3",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
+    "bcrypt": "^6.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.3",
     "drizzle-orm": "^0.45.1",
     "pg": "^8.18.0",
     "reflect-metadata": "^0.2.2",
