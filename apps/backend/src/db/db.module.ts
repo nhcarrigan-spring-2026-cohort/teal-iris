@@ -14,27 +14,15 @@ export const DB = Symbol("DB");
       useFactory: (config: ConfigService) => {
         const databaseUrl = config.get<string>("DATABASE_URL");
 
-        // Sanitize values: strip surrounding quotes if present
-        const rawPassword = config.get<string>("DB_PASSWORD");
-        const sanitize = (v: string | undefined) => {
-          if (typeof v !== "string") return v;
-          return v.replace(/^"(.*)"$/, "$1").replace(/^'(.*)'$/, "$1");
-        };
-        const password = sanitize(rawPassword);
-
-        // console.log("[DB] using DATABASE_URL:", !!databaseUrl);
-
+        const password = config.get<string>("DB_PASSWORD");
         const pool = databaseUrl
-          ? new Pool({ connectionString: sanitize(databaseUrl) })
+          ? new Pool({ connectionString: databaseUrl })
           : new Pool({
-              host: sanitize(config.get<string>("DB_HOST")),
-              port: parseInt(
-                sanitize(config.get<string>("DB_PORT")) || "5432",
-                10,
-              ),
-              user: sanitize(config.get<string>("DB_USER")),
+              host: config.get<string>("DB_HOST"),
+              port: parseInt(config.get<string>("DB_PORT") || "5432", 10),
+              user: config.get<string>("DB_USER"),
               password,
-              database: sanitize(config.get<string>("DB_NAME")),
+              database: config.get<string>("DB_NAME"),
             });
 
         return drizzle(pool);

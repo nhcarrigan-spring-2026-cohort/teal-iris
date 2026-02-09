@@ -2,15 +2,15 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import Joi from "joi";
 import { HealthController } from "./modules/health/health.controller.js";
-import { AuthModule } from "./auth/auth.module.js";
-import { UsersModule } from "./users/users.module.js";
+import { AuthModule } from "./modules/auth/auth.module.js";
+import { UsersModule } from "./modules/users/users.module.js";
 import { DbModule } from "./db/db.module.js";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: [`.env.${process.env.NODE_ENV}`, ".env", "../.env"],
+      envFilePath: ["../../.env.development"],
       validationSchema: Joi.object({
         NODE_ENV: Joi.string()
           .valid("development", "production", "test")
