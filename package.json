@@ -2,6 +2,9 @@
   "name": "teal-iris",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "prepare": "husky",
     "lint-staged": "lint-staged",

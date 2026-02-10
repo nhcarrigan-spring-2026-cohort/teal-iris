@@ -6,9 +6,10 @@ Kudos to you for contributing to teal-iris! 🎉
 
 ### Prerequisites
 
-- **Node.js**: v20 or higher (check with `node --version`)
-- **pnpm**: Latest version (install with `npm install -g pnpm`)
-- **Docker**: For running the full stack with database
+- **[Node.js](https://nodejs.org/en/download)**: v20 or higher (check with `node --version`)
+- **[pnpm](https://pnpm.io/installation)**: Latest version (install with `npm install -g pnpm`)
+- **[Docker](https://www.docker.com/get-started/)**: For running the full stack with database
+- **[nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating)**: Switch Node versions automatically (configure your Node version to project via `nvm use`)
 
 ### Running the Project
 
@@ -21,6 +22,7 @@ docker-compose up --build
 ```
 
 This will start the entire stack including:
+
 - Backend (NestJS) on port 3000
 - Frontend (Next.js) on port 3001
 - PostgreSQL database
@@ -28,18 +30,16 @@ This will start the entire stack including:
 #### Running Individual Apps
 
 **Backend only:**
+
 ```bash
 pnpm --filter backend start:dev
 ```
 
 **Frontend only:**
+
 ```bash
 pnpm --filter frontend dev
 ```
-
-
-
-
 
 ## Development Commands
 
@@ -47,53 +47,52 @@ pnpm --filter frontend dev
 
 For convenience, you can run these commands from the project root:
 
-| Command | Description |
-|---------|-------------|
-| `pnpm install` | Install all dependencies |
-| `pnpm run lint` | Lint both backend and frontend |
+| Command          | Description                     |
+| ---------------- | ------------------------------- |
+| `pnpm install`   | Install all dependencies        |
+| `pnpm run lint`  | Lint both backend and frontend  |
 | `pnpm run build` | Build both backend and frontend |
-| `pnpm run test` | Run backend tests |
+| `pnpm run test`  | Run backend tests               |
 
 ### Workspace Commands
 
-| Command | Description |
-|---------|-------------|
-| `pnpm --filter backend <command>` | Run command in backend workspace |
+| Command                            | Description                       |
+| ---------------------------------- | --------------------------------- |
+| `pnpm --filter backend <command>`  | Run command in backend workspace  |
 | `pnpm --filter frontend <command>` | Run command in frontend workspace |
 
 ### Backend Commands
 
-| Command | Description |
-|---------|-------------|
-| `pnpm --filter backend start:dev` | Start backend in dev mode (watch mode) |
-| `pnpm --filter backend start:debug` | Start backend in debug mode |
-| `pnpm --filter backend build` | Build backend for production |
-| `pnpm --filter backend start:prod` | Run production build |
-| `pnpm --filter backend lint` | Run ESLint |
-| `pnpm --filter backend format` | Format code with Prettier |
-| `pnpm --filter backend test` | Run unit tests |
+| Command                             | Description                            |
+| ----------------------------------- | -------------------------------------- |
+| `pnpm --filter backend start:dev`   | Start backend in dev mode (watch mode) |
+| `pnpm --filter backend start:debug` | Start backend in debug mode            |
+| `pnpm --filter backend build`       | Build backend for production           |
+| `pnpm --filter backend start:prod`  | Run production build                   |
+| `pnpm --filter backend lint`        | Run ESLint                             |
+| `pnpm --filter backend format`      | Format code with Prettier              |
+| `pnpm --filter backend test`        | Run unit tests                         |
 
 ### Frontend Commands
 
-| Command | Description |
-|---------|-------------|
-| `pnpm --filter frontend dev` | Start frontend dev server (port 3000) |
-| `pnpm --filter frontend build` | Build frontend for production |
-| `pnpm --filter frontend start` | Run production build |
-| `pnpm --filter frontend lint` | Run ESLint |
+| Command                        | Description                           |
+| ------------------------------ | ------------------------------------- |
+| `pnpm --filter frontend dev`   | Start frontend dev server (port 3000) |
+| `pnpm --filter frontend build` | Build frontend for production         |
+| `pnpm --filter frontend start` | Run production build                  |
+| `pnpm --filter frontend lint`  | Run ESLint                            |
 
 ### Database Commands (Backend)
 
 The backend uses Drizzle ORM with PostgreSQL. Database configuration is in `apps/backend/drizzle.config.ts`.
 
-| Command | Description |
-|---------|-------------|
-| `docker-compose up -d` | Start PostgreSQL in background |
-| `docker-compose down` | Stop all services |
+| Command                                      | Description                     |
+| -------------------------------------------- | ------------------------------- |
+| `docker-compose up -d`                       | Start PostgreSQL in background  |
+| `docker-compose down`                        | Stop all services               |
 | `pnpm --filter backend drizzle-kit generate` | Generate migrations from schema |
-| `pnpm --filter backend drizzle-kit migrate` | Apply migrations to database |
-| `pnpm --filter backend drizzle-kit studio` | Open Drizzle Studio GUI |
-
+| `pnpm --filter backend drizzle-kit migrate`  | Apply migrations to database    |
+| `pnpm --filter backend drizzle-kit studio`   | Open Drizzle Studio GUI         |
 
 ## Commit Messages
 
@@ -109,15 +108,15 @@ This project enforces [Conventional Commits](https://www.conventionalcommits.org
 
 ### Allowed Scopes
 
-| Scope | Usage |
-|-------|-------|
-| `backend` | Changes in `apps/backend/` |
-| `frontend` | Changes in `apps/frontend/` |
-| `root` | Root config files |
-| `ci` | `.github/workflows/` |
-| `docs` | Documentation files |
-| `docker` | Dockerfiles, `docker-compose.yml` |
-| `deps` | Cross-workspace dependency updates |
+| Scope      | Usage                              |
+| ---------- | ---------------------------------- |
+| `backend`  | Changes in `apps/backend/`         |
+| `frontend` | Changes in `apps/frontend/`        |
+| `root`     | Root config files                  |
+| `ci`       | `.github/workflows/`               |
+| `docs`     | Documentation files                |
+| `docker`   | Dockerfiles, `docker-compose.yml`  |
+| `deps`     | Cross-workspace dependency updates |
 
 ### Examples
 
@@ -149,6 +148,7 @@ feat(api): add endpoint     # invalid scope
 ### Environment Variables
 
 1. Copy `.env.example` to `.env`:
+
    ```bash
    cp .env.example .env
    ```
@@ -157,16 +157,13 @@ feat(api): add endpoint     # invalid scope
    - `PORT`: Backend server port (default: 3000)
    - `DATABASE_URL`: PostgreSQL connection string
 
- ### Submitting Changes
-
+### Submitting Changes
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'feat(backend): add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
-
 
 ## Questions?
 
