@@ -1,3 +1,12 @@
+---
+name: Issue Report
+about: Create a report to help us improve
+title: ''
+labels: ''
+assignees: ''
+---
+
+
 <!--Thank you for taking the extra step.-->
 <!-- Please make sure to fill in all the comments as directed -->
 ##  Objective
