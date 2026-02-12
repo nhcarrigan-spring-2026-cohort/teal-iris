@@ -1,6 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import AuthInitializer from "./test-auth/AuthInitializer"; // client component
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,7 +20,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <AuthInitializer /> {/* Client-side auth initialization */}
         {children}
       </body>
     </html>
