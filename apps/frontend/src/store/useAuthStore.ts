@@ -1,4 +1,3 @@
-// apps/frontend/src/store/useAuthStore.ts
 import { create } from "zustand";
 
 interface User {
@@ -43,7 +42,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   initialize: () => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined") return; // prevent SSR errors
 
     const token = localStorage.getItem("token");
     const userStr = localStorage.getItem("user");
