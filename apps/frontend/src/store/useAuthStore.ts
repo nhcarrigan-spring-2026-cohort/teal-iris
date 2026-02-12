@@ -1,4 +1,3 @@
-// apps/frontend/src/store/useAuthStore.ts
 import { create } from "zustand";
 
 interface User {
@@ -25,18 +24,23 @@ export const useAuthStore = create<AuthState>((set) => ({
   isInitialized: false,
 
   setAuth: (token, user) => {
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(user));
     set({ token, user });
+    if (typeof window !== "undefined") {
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+    }
   },
 
   clearAuth: () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
     set({ token: null, user: null });
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    }
   },
 
   initialize: () => {
+    if (typeof window === "undefined") return; // prevent SSR errors
     const token = localStorage.getItem("token");
     const userStr = localStorage.getItem("user");
     if (token && userStr) {
