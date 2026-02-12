@@ -1,6 +1,8 @@
+// apps/frontend/src/app/layout.tsx
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { useAuthStore } from "../src/store/useAuthStore"; // ← import store
+import AuthInitializer from "./test-auth/AuthInitializer"; // client component
+import { useAuthStore } from "../src/store/useAuthStore";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,12 +22,13 @@ export const metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  // ← Initialize Auth store here
+  // Initialize Auth store (SSR safe)
   useAuthStore.getState().initialize();
 
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <AuthInitializer /> {/* Client-side auth initialization */}
         {children}
       </body>
     </html>
