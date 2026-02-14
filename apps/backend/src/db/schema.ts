@@ -2,7 +2,14 @@
 // Will be populated in Phase 2 when Docker/PostgreSQL is set up
 
 // export const schema = {};
-import { pgTable, uuid, varchar, text, timestamp } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  uuid,
+  varchar,
+  text,
+  timestamp,
+  jsonb,
+} from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -15,4 +22,8 @@ export const users = pgTable("users", {
   targetLanguage: varchar("target_language", { length: 10 }).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  // Profile Fields
+  bio: text("bio"),
+  timezone: varchar("timezone", { length: 100 }),
+  videoHandles: jsonb("video_handles"),
 });
