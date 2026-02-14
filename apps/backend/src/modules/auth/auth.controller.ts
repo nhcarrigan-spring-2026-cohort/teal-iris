@@ -1,4 +1,3 @@
-// apps/backend/src/modules/auth/auth.controller.ts
 import {
   Body,
   Controller,
@@ -37,8 +36,7 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @HttpCode(HttpStatus.OK)
   async login(@Request() req: { user: SafeUser }, @Body() _dto: LoginDto) {
-    // LoginDto is passed here so class-validator can validate the body
-    // req.user is populated by LocalStrategy
+    
     return this.authService.login(req.user as SafeUser);
   }
 
@@ -53,7 +51,7 @@ export class AuthController {
   @Get("google")
   @UseGuards(AuthGuard("google"))
   async googleAuth() {
-    // Guard handles the redirect automatically
+    
   }
 
   @Get("google/callback")

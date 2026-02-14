@@ -10,15 +10,15 @@ import {
 
 export class RegisterDto {
   @IsEmail()
-  email: string;
+  email!: string;
 
   @IsString()
   @MinLength(8)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
     message:
-      "Password must contain atleast one uppercase character, a lowercase character and a special character or a number.",
+      "Password must contain at least one uppercase letter, one lowercase letter, and either a number or a special character.",
   })
-  password: string;
+  password!: string;
 
   @IsOptional()
   @IsString()
@@ -36,7 +36,7 @@ export class RegisterDto {
     message:
       'Language must be a valid 2-letter ISO 639-1 code (e.g., "en", "es")',
   })
-  nativeLanguage: string;
+  nativeLanguage!: string;
 
   @IsString()
   @MaxLength(10)
@@ -44,5 +44,5 @@ export class RegisterDto {
     message:
       'Language must be a valid 2-letter ISO 639-1 code (e.g., "en", "es")',
   })
-  targetLanguage: string;
+  targetLanguage!: string;
 }

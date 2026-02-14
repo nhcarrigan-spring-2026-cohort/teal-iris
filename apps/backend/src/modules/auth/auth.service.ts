@@ -35,7 +35,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async register(dto: RegisterDto): Promise<SafeUser> {
+  async register(dto: RegisterDto) {
     const {
       email,
       password,
@@ -45,6 +45,7 @@ export class AuthService {
       targetLanguage,
     } = dto;
 
+    // Check if email already exists
     const existingUser = await this.db.query.users.findFirst({
       where: eq(users.email, email),
     });
@@ -82,6 +83,7 @@ export class AuthService {
     const verificationToken = randomBytes(32).toString("hex");
     const verificationTokenExpiry = new Date(Date.now() + 15 * 60 * 1000);
 
+    // Insert user into database
     const [user] = await this.db
       .insert(users)
       .values({
@@ -105,7 +107,7 @@ export class AuthService {
         createdAt: users.createdAt,
       });
 
-    // //log verification url
+    // log verification url
     const verificationUrl = `http://localhost:3000/auth/verify?token=${verificationToken}`;
     console.log("Email verification URL:", verificationUrl);
 
@@ -132,7 +134,6 @@ export class AuthService {
       throw new UnauthorizedException("The password provided is incorrect");
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordHash, ...result } = user;
     return result;
   }
