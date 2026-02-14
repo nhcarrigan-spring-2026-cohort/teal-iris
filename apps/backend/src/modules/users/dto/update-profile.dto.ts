@@ -1,10 +1,23 @@
 import {
-  IsString,
   IsOptional,
+  IsString,
   Length,
-  IsObject,
   IsTimeZone,
+  ValidateNested,
 } from "class-validator";
+import { Type } from "class-transformer";
+
+class VideoHandlesDto {
+  @IsOptional()
+  @IsString()
+  @Length(1, 100)
+  discord?: string;
+
+  @IsOptional()
+  @IsString()
+  @Length(1, 100)
+  zoom?: string;
+}
 
 export class UpdateProfileDto {
   @IsOptional()
@@ -13,11 +26,11 @@ export class UpdateProfileDto {
   bio?: string;
 
   @IsOptional()
-  @IsString()
   @IsTimeZone()
   timezone?: string;
 
   @IsOptional()
-  @IsObject()
-  videoHandles?: Record<string, string>;
+  @ValidateNested()
+  @Type(() => VideoHandlesDto)
+  videoHandles?: VideoHandlesDto;
 }

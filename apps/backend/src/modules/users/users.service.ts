@@ -1,4 +1,4 @@
-import { Injectable, Inject } from "@nestjs/common";
+import { Injectable, NotFoundException, Inject } from "@nestjs/common";
 import { eq } from "drizzle-orm";
 import { NodePgDatabase } from "drizzle-orm/node-postgres";
 import * as schema from "../../db/schema.js";
@@ -17,6 +17,11 @@ export class UsersService {
         passwordHash: false,
       },
     });
+
+    if (!profile) {
+      throw new NotFoundException("User profile not found");
+    }
+
     return profile;
   }
 
@@ -28,7 +33,23 @@ export class UsersService {
         updatedAt: new Date(),
       })
       .where(eq(users.id, userId))
-      .returning();
+      .returning({
+        id: users.id,
+        email: users.email,
+        firstName: users.firstName,
+        lastName: users.lastName,
+        nativeLanguage: users.nativeLanguage,
+        targetLanguage: users.targetLanguage,
+        bio: users.bio,
+        timezone: users.timezone,
+        videoHandles: users.videoHandles,
+        createdAt: users.createdAt,
+        updatedAt: users.updatedAt,
+      });
+
+    if (!updatedUser) {
+      throw new NotFoundException("User profile not found");
+    }
 
     return updatedUser;
   }
