@@ -20,5 +20,5 @@ export const users = pgTable("users", {
 export const languages = pgTable("languages", {
   code: varchar("code", { length: 2 }).primaryKey(), // ISO 639-1
   name: varchar("name", { length: 100 }).notNull(),
-  nativeName: varchar("native_name", { length: 100 }),
+  nativeName: varchar("native_name", { length: 100 }).notNull(),
 });
