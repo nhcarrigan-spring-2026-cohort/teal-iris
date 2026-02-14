@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1770199841343,
-      "tag": "0000_boring_risque",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1770895822467,
-      "tag": "0001_rainy_killmonger",
+      "when": 1771083003309,
+      "tag": "0000_tense_bucky",
       "breakpoints": true
     }
   ]
