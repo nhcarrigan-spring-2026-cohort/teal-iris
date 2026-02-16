@@ -1,9 +1,13 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./src"
+    "outDir": "./dist",           
+    "rootDir": "./src",           
+    "module": "nodenext",         
+    "moduleResolution": "nodenext",
+    "declaration": false,         
+    "sourceMap": true             
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "test", "drizzle.config.ts"]
+  "exclude": ["node_modules", "dist", "test"]
 }

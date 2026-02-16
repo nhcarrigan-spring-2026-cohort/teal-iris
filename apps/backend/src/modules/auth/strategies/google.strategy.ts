@@ -2,14 +2,19 @@ import { Injectable, Logger } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy, Profile } from "passport-google-oauth20";
 import { UsersService, User } from "../../users/users.service.js";
+import { ConfigService } from "@nestjs/config";
+
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
   private readonly logger = new Logger(GoogleStrategy.name);
 
-  constructor(private readonly usersService: UsersService) {
-    const clientID = process.env.GOOGLE_CLIENT_ID;
-    const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-    const callbackURL = process.env.GOOGLE_CALLBACK_URL;
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly configService: ConfigService,
+  ) {
+    const clientID = configService.get<string>("GOOGLE_CLIENT_ID");
+    const clientSecret = configService.get<string>("GOOGLE_CLIENT_SECRET");
+    const callbackURL = configService.get<string>("GOOGLE_CALLBACK_URL");
 
     if (!clientID || !clientSecret || !callbackURL) {
       throw new Error(

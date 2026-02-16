@@ -1,15 +1,12 @@
 import { Module } from "@nestjs/common";
 import { PassportModule } from "@nestjs/passport";
-import { GoogleStrategy } from "./strategies/google.strategy"; // path to your strategy
+import { GoogleStrategy } from "./strategies/google.strategy";
 import { AuthController } from "./auth.controller";
-import { UsersService } from "../users/users.service"; // import UsersService
+import { UsersModule } from "../users/users.module"; // import UsersModule
 
 @Module({
-  imports: [PassportModule],
-  providers: [
-    GoogleStrategy,
-    UsersService, // provide UsersService so it can be injected
-  ],
+  imports: [PassportModule, UsersModule], // Import UsersModule to use UsersService
+  providers: [GoogleStrategy], // No need to explicitly provide UsersService, it will come from UsersModule
   controllers: [AuthController],
   exports: [GoogleStrategy],
 })

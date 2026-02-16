@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // apps/backend/src/modules/auth/auth.service.ts
 import {
   BadRequestException,
@@ -15,6 +16,11 @@ import { DRIZZLE } from "../../db/db.module.js";
 import * as schema from "../../db/schema.js";
 import { users, languages } from "../../db/schema.js";
 import { RegisterDto } from "./dto/register.dto.js";
+=======
+import { Injectable } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { User } from "../users/users.service.js";
+>>>>>>> d11b965 (chore(backend): migrate project to ESM and update tsconfig)
 
 export interface SafeUser {
   id: string;
@@ -28,6 +34,7 @@ export interface SafeUser {
 
 @Injectable()
 export class AuthService {
+<<<<<<< HEAD
   constructor(
     @Inject(DRIZZLE)
     private readonly db: NodePgDatabase<typeof schema>,
@@ -102,6 +109,15 @@ export class AuthService {
 
     // Return safe user profile (no passwordHash)
     return user;
+=======
+  constructor(private readonly jwtService: JwtService) {}
+
+  generateJwt(user: User): string {
+    return this.jwtService.sign(
+      { sub: user.id, email: user.email },
+      { expiresIn: "1h" }, // adjust as needed
+    );
+>>>>>>> d11b965 (chore(backend): migrate project to ESM and update tsconfig)
   }
 
   async validateUser(email: string, pass: string): Promise<SafeUser> {
