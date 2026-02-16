@@ -1,32 +1,30 @@
 {
   "compilerOptions": {
-    "target": "ES2023",
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "lib": ["ES2023"],
-    "rootDir": "src",
-    "outDir": "dist",
+    "target": "ES2023",
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    "resolvePackageJsonExports": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
+    "isolatedModules": true,
+
+    "declaration": true,
+    "removeComments": true,
     "emitDecoratorMetadata": true,
-    "strict": true,
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-    "declaration": true,
-    "sourceMap": true,
-    "incremental": true
+    "noImplicitAny": false
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "drizzle.config.ts",
-    "drizzle.config.d.ts",
-    "drizzle.config.js",
-    "test/**/*"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "test/**/*"]
 }

@@ -1,7 +1,7 @@
 // apps/backend/src/modules/auth/auth.module.ts
 import { Module } from "@nestjs/common";
-import { JwtModule, JwtModuleOptions } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
+import { JwtModule, JwtModuleOptions } from "@nestjs/jwt";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import path from "path";
 
@@ -10,6 +10,7 @@ import { AuthService } from "./auth.service.js";
 import { LocalStrategy } from "./strategies/local.strategy.js";
 import { JwtStrategy } from "./strategies/jwt.strategy.js";
 import { GoogleStrategy } from "./strategies/google.strategy.js";
+import { UsersModule } from "../users/users.module.js";
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { GoogleStrategy } from "./strategies/google.strategy.js";
       envFilePath: path.resolve(process.cwd(), "../../.env"), // root .env
     }),
     PassportModule,
+    UsersModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
