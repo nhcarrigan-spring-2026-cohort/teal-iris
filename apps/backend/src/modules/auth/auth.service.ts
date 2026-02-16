@@ -1,27 +1,21 @@
-<<<<<<< HEAD
 // apps/backend/src/modules/auth/auth.service.ts
 import {
-  BadRequestException,
-  ConflictException,
-  Inject,
   Injectable,
+  ConflictException,
   UnauthorizedException,
+  BadRequestException,
+  Inject,
 } from "@nestjs/common";
 import { randomBytes } from "crypto";
 import { JwtService } from "@nestjs/jwt";
+import { User } from "../users/users.service.js";
 import * as bcrypt from "bcrypt";
 import { eq } from "drizzle-orm";
 import { NodePgDatabase } from "drizzle-orm/node-postgres";
-
 import { DRIZZLE } from "../../db/db.module.js";
 import * as schema from "../../db/schema.js";
 import { users, languages } from "../../db/schema.js";
 import { RegisterDto } from "./dto/register.dto.js";
-=======
-import { Injectable } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import { User } from "../users/users.service.js";
->>>>>>> d11b965 (chore(backend): migrate project to ESM and update tsconfig)
 
 export interface SafeUser {
   id: string;
@@ -35,14 +29,13 @@ export interface SafeUser {
 
 @Injectable()
 export class AuthService {
-<<<<<<< HEAD
   constructor(
     @Inject(DRIZZLE)
     private readonly db: NodePgDatabase<typeof schema>,
     private readonly jwtService: JwtService,
   ) {}
 
-  async register(dto: RegisterDto) {
+  async register(dto: RegisterDto): Promise<SafeUser> {
     const {
       email,
       password,
@@ -52,7 +45,6 @@ export class AuthService {
       targetLanguage,
     } = dto;
 
-    // Check if email already exists
     const existingUser = await this.db.query.users.findFirst({
       where: eq(users.email, email),
     });
@@ -70,6 +62,7 @@ export class AuthService {
     const nativeLang = await this.db.query.languages.findFirst({
       where: eq(languages.code, nativeLanguage),
     });
+
     if (!nativeLang) {
       throw new BadRequestException(
         `Invalid native language code: "${nativeLanguage}"`,
@@ -79,6 +72,7 @@ export class AuthService {
     const targetLang = await this.db.query.languages.findFirst({
       where: eq(languages.code, targetLanguage),
     });
+
     if (!targetLang) {
       throw new BadRequestException(
         `Invalid target language code: "${targetLanguage}"`,
@@ -86,11 +80,11 @@ export class AuthService {
     }
 
     const passwordHash = await bcrypt.hash(password, 12);
-    //verification token
+
+    // verification token
     const verificationToken = randomBytes(32).toString("hex");
     const verificationTokenExpiry = new Date(Date.now() + 15 * 60 * 1000);
 
-    // Insert user into database
     const [user] = await this.db
       .insert(users)
       .values({
@@ -114,20 +108,18 @@ export class AuthService {
         createdAt: users.createdAt,
       });
 
-    // log verification url
+    // log verification URL (optional)
     const verificationUrl = `http://localhost:3000/auth/verify?token=${verificationToken}`;
     console.log("Email verification URL:", verificationUrl);
 
     return user;
-=======
-  constructor(private readonly jwtService: JwtService) {}
+  }
 
   generateJwt(user: User): string {
     return this.jwtService.sign(
       { sub: user.id, email: user.email },
-      { expiresIn: "1h" }, // adjust as needed
+      { expiresIn: "1h" },
     );
->>>>>>> d11b965 (chore(backend): migrate project to ESM and update tsconfig)
   }
 
   async validateUser(email: string, pass: string): Promise<SafeUser> {
@@ -138,7 +130,8 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException("User with this email was not found");
     }
-    //block if user is not verified
+
+    // block if user is not verified
     if (!user.emailVerified) {
       throw new UnauthorizedException(
         "Please verify your email before logging in",
@@ -150,12 +143,13 @@ export class AuthService {
       throw new UnauthorizedException("The password provided is incorrect");
     }
 
-    const { passwordHash, ...result } = user;
-    return result;
+    const { passwordHash: _passwordHash, ...safeUser } = user;
+    return safeUser;
   }
 
   async login(user: SafeUser) {
     const payload = { email: user.email, sub: user.id };
+
     return {
       accessToken: this.jwtService.sign(payload),
       user: {
@@ -165,7 +159,7 @@ export class AuthService {
     };
   }
 
-  //Email verification
+  // Email verification
   async verifyEmail(token: string) {
     const user = await this.db.query.users.findFirst({
       where: eq(users.verificationToken, token),
@@ -178,16 +172,14 @@ export class AuthService {
     if (user.emailVerified) {
       throw new BadRequestException("Email is already verified");
     }
+
     if (
       !user.verificationTokenExpiry ||
       Date.now() > user.verificationTokenExpiry.getTime()
     ) {
       await this.db
         .update(users)
-        .set({
-          verificationToken: null,
-          verificationTokenExpiry: null,
-        })
+        .set({ verificationToken: null, verificationTokenExpiry: null })
         .where(eq(users.id, user.id));
 
       throw new BadRequestException(
