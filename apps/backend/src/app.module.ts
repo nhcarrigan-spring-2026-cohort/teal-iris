@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { AppController } from "./app.controller.js";
+
+import { AppController } from "./app.controller.js"; // <--- important for ESM
 import { AuthModule } from "./modules/auth/auth.module.js";
 import { DbModule } from "./db/db.module.js";
 import { HealthController } from "./modules/health/health.controller.js";

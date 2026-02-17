@@ -5,12 +5,14 @@ import { JwtModule } from "@nestjs/jwt";
 import { AuthController } from "./auth.controller.js";
 import { AuthService } from "./auth.service.js";
 import { JwtStrategy } from "./jwt.strategy.js";
+import { ConfigModule } from "@nestjs/config";
 import { GoogleStrategy } from "./strategies/google.strategy.js";
 
 import { UsersModule } from "../users/users.module.js";
 
 @Module({
   imports: [
+    ConfigModule,
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
