@@ -35,7 +35,6 @@ export class AuthController {
   ) {}
 
   // --- Local Authentication ---
-
   @Post("register")
   @HttpCode(HttpStatus.CREATED)
   async register(@Body() dto: RegisterDto) {
@@ -56,11 +55,10 @@ export class AuthController {
   }
 
   // --- Google OAuth ---
-
   @Get("google")
   @UseGuards(GoogleAuthGuard)
   googleAuth(): void {
-    // GoogleAuthGuard handles redirect
+    // GoogleAuthGuard handles redirect to Google
   }
 
   @Get("google/callback")
@@ -69,7 +67,7 @@ export class AuthController {
     @Req() req: ExpressRequest,
     @Res() res: ExpressResponse,
   ): Promise<void> {
-    let user = req.user as User;
+    const user = req.user as User;
 
     if (!user) {
       res
@@ -78,18 +76,10 @@ export class AuthController {
       return;
     }
 
-    // Check if user exists in DB, create if not
-    const existingUser = this.usersService.findByEmail(user.email);
-    if (existingUser) {
-      user = existingUser;
-    } else {
-      user = this.usersService.createUser(user.email, user.name);
-    }
-
     // Generate JWT
     const token = this.authService.generateJwt(user);
 
-    // Redirect to frontend
+    // Redirect to frontend with JWT
     const frontendUrl =
       this.configService.get<string>("FRONTEND_CALLBACK_URL") ||
       "http://localhost:3000/auth/callback";
