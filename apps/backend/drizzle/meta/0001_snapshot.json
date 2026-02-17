@@ -1,6 +1,6 @@
 {
-  "id": "f0d4f130-84be-4104-b1c9-e7343c3160e5",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "edb8dcc6-2435-4ee3-bb1e-cc6517b51b1e",
+  "prevId": "f0d4f130-84be-4104-b1c9-e7343c3160e5",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -110,6 +110,24 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "bio": {
+          "name": "bio",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "timezone": {
+          "name": "timezone",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "video_handles": {
+          "name": "video_handles",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {

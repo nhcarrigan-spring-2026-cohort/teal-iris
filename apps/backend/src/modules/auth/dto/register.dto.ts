@@ -1,6 +1,4 @@
-// apps/backend/src/auth/dto/register.dto.ts
-//Request validations
-
+// apps/backend/src/modules/auth/dto/register.dto.ts
 import {
   IsEmail,
   IsOptional,
@@ -16,6 +14,10 @@ export class RegisterDto {
 
   @IsString()
   @MinLength(8)
+  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+    message:
+      "Password must contain atleast one uppercase character, a lowercase character and a special character or a number.",
+  })
   password: string;
 
   @IsOptional()
@@ -28,7 +30,6 @@ export class RegisterDto {
   @MaxLength(100)
   lastName?: string;
 
-  // Language fields
   @IsString()
   @MaxLength(10)
   @Matches(/^[a-z]{2}$/, {

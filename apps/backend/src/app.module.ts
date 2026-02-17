@@ -6,6 +6,7 @@ import { ConfigModule } from "@nestjs/config"; // loads .env
 import { HealthController } from "./modules/health/health.controller.js";
 import { AuthModule } from "./modules/auth/auth.module.js";
 import { DbModule } from "./db/db.module.js";
+import { UsersModule } from "./modules/users/users.module.js";
 
 // -------------------------------
 // APP MODULE
@@ -18,6 +19,7 @@ import { DbModule } from "./db/db.module.js";
     }),
     DbModule,
     AuthModule,
+    UsersModule,
   ],
   controllers: [HealthController],
   providers: [],
