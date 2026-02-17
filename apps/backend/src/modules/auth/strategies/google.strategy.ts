@@ -10,8 +10,9 @@ export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
 
   constructor(
     private readonly usersService: UsersService,
-    private readonly configService: ConfigService,
+    private readonly configService: ConfigService, // ✅ mark as private for Nest injection
   ) {
+    // Fetch config values BEFORE calling super
     const clientID = configService.get<string>("GOOGLE_CLIENT_ID");
     const clientSecret = configService.get<string>("GOOGLE_CLIENT_SECRET");
     const callbackURL = configService.get<string>("GOOGLE_CALLBACK_URL");
@@ -28,18 +29,22 @@ export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
       callbackURL,
       scope: ["email", "profile"],
     });
+
+    // Optional: log for debugging
+    this.logger.log(`GoogleStrategy initialized with clientID: ${clientID}`);
   }
 
-  async validate(accessToken: string, profile: Profile): Promise<User> {
+  async validate(
+    accessToken: string,
+    refreshToken: string,
+    profile: Profile,
+  ): Promise<User> {
     const email = profile.emails?.[0]?.value;
     const name = profile.displayName;
 
-    if (!email) {
-      throw new Error("Google account has no email associated");
-    }
+    if (!email) throw new Error("Google account has no email");
 
     let user = this.usersService.findByEmail(email);
-
     if (!user) {
       user = this.usersService.createUser(email, name);
       this.logger.log(`Created new user: ${email}`);

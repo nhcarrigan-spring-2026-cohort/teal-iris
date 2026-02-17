@@ -1,8 +1,10 @@
 // apps/backend/src/app.module.ts
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { AppController } from "./app.controller.js";
-import { HealthController } from "./modules/health/health.controller.js";
+
+import { AppController } from "./app.controller.js"; // ESM-compatible
+import { HealthController } from "./modules/health/health.controller.js"; // include HealthController
+
 import { AuthModule } from "./modules/auth/auth.module.js";
 import { DbModule } from "./db/db.module.js";
 import { UsersModule } from "./modules/users/users.module.js";
@@ -12,7 +14,7 @@ import { ConnectionsModule } from "./modules/connections/connections.module.js";
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: "../../.env", // keep root-level .env
+      envFilePath: "../../.env", // root-level .env
     }),
     DbModule,
     AuthModule,

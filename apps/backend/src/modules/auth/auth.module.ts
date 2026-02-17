@@ -27,7 +27,7 @@ import { UsersModule } from "../users/users.module.js";
         const secret = configService.get<string>("JWT_SECRET") ?? "fallback-secret";
         const expiresInEnv = configService.get<string>("JWT_EXPIRATION") ?? "3600";
 
-        // Convert to number of seconds
+        // Convert to seconds
         let expiresInSeconds: number;
         if (/^\d+$/.test(expiresInEnv)) {
           expiresInSeconds = parseInt(expiresInEnv, 10);
@@ -39,9 +39,7 @@ import { UsersModule } from "../users/users.module.js";
 
         return {
           secret,
-          signOptions: {
-            expiresIn: expiresInSeconds,
-          },
+          signOptions: { expiresIn: expiresInSeconds },
         };
       },
     }),
