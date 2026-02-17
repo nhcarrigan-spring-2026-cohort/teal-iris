@@ -1,3 +1,4 @@
+// apps/backend/src/modules/users/users.controller.ts
 import {
   Controller,
   Get,
@@ -23,11 +24,13 @@ export class UsersController {
   }
 
   @Get("me")
+  @UseGuards(JwtAuthGuard)
   async getProfile(@Request() req) {
     return this.usersService.getProfile(req.user.id);
   }
 
   @Patch("me")
+  @UseGuards(JwtAuthGuard)
   async updateProfile(@Request() req, @Body() dto: UpdateProfileDto) {
     return this.usersService.updateProfile(req.user.id, dto);
   }
