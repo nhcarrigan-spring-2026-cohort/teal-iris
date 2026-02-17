@@ -24,10 +24,8 @@ import { UsersModule } from "../users/users.module.js";
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService): JwtModuleOptions => {
-        const secret =
-          configService.get<string>("JWT_SECRET") ?? "fallback-secret";
-        const expiresInEnv =
-          configService.get<string>("JWT_EXPIRATION") ?? "3600";
+        const secret = configService.get<string>("JWT_SECRET") ?? "fallback-secret";
+        const expiresInEnv = configService.get<string>("JWT_EXPIRATION") ?? "3600";
 
         // Convert to number of seconds
         let expiresInSeconds: number;

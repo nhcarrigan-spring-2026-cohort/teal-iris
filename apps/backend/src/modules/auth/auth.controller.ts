@@ -17,8 +17,10 @@ import type { Request as ExpressRequest, Response as ExpressResponse } from "exp
 import { AuthService, SafeUser } from "./auth.service.js";
 import { UsersService, User } from "../users/users.service.js";
 import { ConfigService } from "@nestjs/config";
+
 import { RegisterDto } from "./dto/register.dto.js";
 import { LoginDto } from "./dto/login.dto.js";
+
 import { LocalAuthGuard } from "./guards/local-auth.guard.js";
 import { JwtAuthGuard } from "./guards/jwt-auth.guard.js";
 import { GoogleAuthGuard } from "./guards/google-auth.guard.js";
@@ -27,11 +29,11 @@ import { GoogleAuthGuard } from "./guards/google-auth.guard.js";
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
+    private readonly usersService: UsersService,
     private readonly configService: ConfigService,
-    private readonly usersService: UsersService, // injected UsersService
   ) {}
 
-  // --- Local Auth ---
+  // --- Local Authentication ---
   @Post("register")
   @HttpCode(HttpStatus.CREATED)
   async register(@Body() dto: RegisterDto) {
@@ -42,7 +44,7 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @HttpCode(HttpStatus.OK)
   async login(@Request() req: { user: SafeUser }, @Body() _dto: LoginDto) {
-    return this.authService.login(req.user as SafeUser);
+    return this.authService.login(req.user);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -55,7 +57,7 @@ export class AuthController {
   @Get("google")
   @UseGuards(GoogleAuthGuard)
   googleAuth(): void {
-    // GoogleAuthGuard handles the redirect
+    // GoogleAuthGuard handles redirect
   }
 
   @Get("google/callback")
@@ -73,7 +75,7 @@ export class AuthController {
       return;
     }
 
-    // Check if user exists, create if not
+    // Check if user exists in DB, create if not
     const existingUser = this.usersService.findByEmail(user.email);
     if (existingUser) {
       user = existingUser;
@@ -81,7 +83,7 @@ export class AuthController {
       user = this.usersService.createUser(user.email, user.name);
     }
 
-    // Generate JWT for the user
+    // Generate JWT
     const token = this.authService.generateJwt(user);
 
     // Redirect to frontend with token
