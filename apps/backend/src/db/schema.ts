@@ -1,5 +1,6 @@
 import {
   index,
+  jsonb,
   pgTable,
   uuid,
   varchar,
@@ -30,6 +31,10 @@ export const users = pgTable(
       .references(() => languages.id, { onDelete: "restrict" }),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
+    // Profile fields
+    bio: text("bio"),
+    timezone: varchar("timezone", { length: 100 }),
+    videoHandles: jsonb("video_handles"),
   },
   (table) => [
     index("users_native_language_id_idx").on(table.nativeLanguageId),

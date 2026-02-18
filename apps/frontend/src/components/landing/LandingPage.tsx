@@ -1,14 +1,14 @@
 import React from "react";
-import { Navbar } from "./Navbar";
+import { Navbar } from "../Navbar/Navbar";
 import { Hero } from "./Hero";
 import { SectionTitle } from "./SectionTitle";
 import { ResourceGrid } from "./ResourceGrid";
 import { About } from "./About";
 import { FeatureGrid } from "./FeatureGrid";
 import { ContactSection } from "./ContactSection";
-import { Footer } from "./Footer";
+import { Footer } from "../Footer/Footer";
 
-export function LandingPage() {
+export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#071a2a] text-white">
       <Navbar />

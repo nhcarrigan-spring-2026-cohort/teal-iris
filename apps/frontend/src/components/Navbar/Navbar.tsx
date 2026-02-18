@@ -1,6 +1,8 @@
 import React from "react";
 import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
+import Link from "next/link";
+
 
 const navItems = [
   { label: "Home", href: "#home" },
@@ -37,7 +39,10 @@ export function Navbar() {
           </nav>
 
           {/* CTA */}
-          <Button>Sign In</Button>
+            <Link href="/login">
+          <Button>Sign In →</Button>
+          </Link>
+
         </div>
       </Container>
     </header>

@@ -8,6 +8,13 @@
       "when": 1771162500583,
       "tag": "0000_aspiring_absorbing_man",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1771308404266,
+      "tag": "0001_wet_patch",
+      "breakpoints": true
     }
   ]
 }
