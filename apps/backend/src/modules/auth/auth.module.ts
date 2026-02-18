@@ -1,7 +1,6 @@
-// apps/backend/src/modules/auth/auth.module.ts
 import { Module } from "@nestjs/common";
-import { PassportModule } from "@nestjs/passport";
 import { JwtModule, JwtModuleOptions } from "@nestjs/jwt";
+import { PassportModule } from "@nestjs/passport";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import path from "path";
 
@@ -16,19 +15,22 @@ import { UsersModule } from "../users/users.module.js";
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: path.resolve(process.cwd(), "../../.env"), // root .env
+      envFilePath: path.resolve(process.cwd(), "../../.env"), // root .env (monorepo safe)
     }),
+
     PassportModule,
-    UsersModule,
+
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService): JwtModuleOptions => {
-        const secret = configService.get<string>("JWT_SECRET") ?? "fallback-secret";
-        const expiresInEnv = configService.get<string>("JWT_EXPIRATION") ?? "3600";
+        const secret =
+          configService.get<string>("JWT_SECRET") ?? "fallback-secret";
+        const expiresInEnv =
+          configService.get<string>("JWT_EXPIRATION") ?? "3600";
 
-        // Convert to seconds
         let expiresInSeconds: number;
+
         if (/^\d+$/.test(expiresInEnv)) {
           expiresInSeconds = parseInt(expiresInEnv, 10);
         } else if (/^\d+h$/.test(expiresInEnv)) {
@@ -43,9 +45,16 @@ import { UsersModule } from "../users/users.module.js";
         };
       },
     }),
+
+    UsersModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy, GoogleStrategy],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
+    GoogleStrategy,
+  ],
   exports: [AuthService],
 })
 export class AuthModule {}
