@@ -1,6 +1,4 @@
-// Placeholder for Drizzle schema
-// Will be populated in Phase 2 when Docker/PostgreSQL is set up
-
+// apps/backend/src/db/schema.ts
 import {
   index,
   jsonb,
@@ -26,7 +24,7 @@ export const languages = pgTable("languages", {
   nativeName: varchar("native_name", { length: 100 }).notNull(),
 });
 
-// --- Users Table ---
+// --- Users Table (relational version) ---
 export const users = pgTable(
   "users",
   {
