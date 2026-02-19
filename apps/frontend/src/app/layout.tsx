@@ -1,11 +1,6 @@
 // apps/frontend/src/app/layout.tsx
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-<<<<<<< HEAD:apps/frontend/src/app/layout.tsx
-import AuthInitializer from "./test-auth/AuthInitializer"; // client component
-import { useAuthStore } from "../src/store/useAuthStore";
-=======
->>>>>>> 967cc0d (fix(frontend): remove AuthInitializer import after deleting test page):apps/frontend/app/layout.tsx
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +20,6 @@ export const metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  // Initialize Auth store (SSR safe)
-  useAuthStore.getState().initialize();
-
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>

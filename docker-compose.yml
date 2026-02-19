@@ -29,13 +29,11 @@ services:
     environment:
       - DATABASE_URL=postgres://user:password@db:5432/teal_iris
       - PORT=3000
-      - GOOGLE_CLIENT_ID= ${GOOGLE_CLIENT_ID}
-      - GOOGLE_CLIENT_SECRET= ${GOOGLE_CLIENT_SECRET}
-      - GOOGLE_CALLBACK_URL= ${GOOGLE_CALLBACK_URL}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback
     volumes:
-      # Hot reload: sync source code
       - ./apps/backend/src:/app/apps/backend/src
-      # Preserve node_modules in container
       - /app/node_modules
       - /app/apps/backend/node_modules
     command: pnpm --filter backend start:dev
@@ -50,9 +48,7 @@ services:
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:3000
     volumes:
-      # Hot reload: sync source code
       - ./apps/frontend:/app/apps/frontend
-      # Preserve node_modules and .next in container
       - /app/node_modules
       - /app/apps/frontend/node_modules
       - /app/apps/frontend/.next

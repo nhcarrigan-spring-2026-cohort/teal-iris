@@ -1,4 +1,3 @@
-// apps/backend/src/modules/auth/auth.controller.ts
 import {
   Body,
   Controller,

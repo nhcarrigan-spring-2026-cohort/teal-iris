@@ -1,4 +1,3 @@
-// apps/backend/src/modules/auth/auth.service.ts
 import {
   Injectable,
   ConflictException,
@@ -80,8 +79,6 @@ export class AuthService {
     }
 
     const passwordHash = await bcrypt.hash(password, 12);
-
-    // verification token
     const verificationToken = randomBytes(32).toString("hex");
     const verificationTokenExpiry = new Date(Date.now() + 15 * 60 * 1000);
 
@@ -108,8 +105,8 @@ export class AuthService {
         createdAt: users.createdAt,
       });
 
-    // log verification URL (optional)
-    const verificationUrl = `http://localhost:3000/auth/verify?token=${verificationToken}`;
+    // Log verification URL (replace with email sending in production)
+    const verificationUrl = `http://localhost:3000/auth/verify-email?token=${verificationToken}`;
     console.log("Email verification URL:", verificationUrl);
 
     return user;
@@ -131,7 +128,6 @@ export class AuthService {
       throw new UnauthorizedException("User with this email was not found");
     }
 
-    // block if user is not verified
     if (!user.emailVerified) {
       throw new UnauthorizedException(
         "Please verify your email before logging in",
@@ -159,7 +155,6 @@ export class AuthService {
     };
   }
 
-  // Email verification
   async verifyEmail(token: string) {
     const user = await this.db.query.users.findFirst({
       where: eq(users.verificationToken, token),
