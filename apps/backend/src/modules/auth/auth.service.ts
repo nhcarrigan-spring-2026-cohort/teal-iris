@@ -94,7 +94,6 @@ export class AuthService {
         emailVerified: null,
         nativeLanguageId: nativeLang.id,
         targetLanguageId: targetLang.id,
-
       })
       .returning({
         id: users.id,
