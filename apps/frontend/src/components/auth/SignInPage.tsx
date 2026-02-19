@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useState } from "react";
+import Link from 'next/link';
+import { useState } from 'react';
 
 export function SignInPage() {
-  const [userId, setUserId] = useState("");
-  const [password, setPassword] = useState("");
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log("UI-only sign in:", { userId, password });
+    console.log('UI-only sign in:', { userId, password });
     // No API call on purpose
   }
 
@@ -26,7 +26,10 @@ export function SignInPage() {
 
           <form className="mt-6 space-y-4" onSubmit={onSubmit}>
             <div className="space-y-1">
-              <label htmlFor="userId" className="cursor-pointer text-sm font-medium text-slate-200">
+              <label
+                htmlFor="userId"
+                className="cursor-pointer text-sm font-medium text-slate-200"
+              >
                 User ID
               </label>
               <input
@@ -39,7 +42,10 @@ export function SignInPage() {
             </div>
 
             <div className="space-y-1">
-              <label htmlFor="password" className="cursor-pointer text-sm font-medium text-slate-200">
+              <label
+                htmlFor="password"
+                className="cursor-pointer text-sm font-medium text-slate-200"
+              >
                 Password
               </label>
               <input
@@ -61,8 +67,11 @@ export function SignInPage() {
             </button>
 
             <p className="pt-1 text-center text-sm text-slate-300">
-              Don&apos;t have an account?{" "}
-              <Link href="/register" className="text-teal-300 underline underline-offset-4 hover:text-teal-200">
+              Don&apos;t have an account?{' '}
+              <Link
+                href="/register"
+                className="text-teal-300 underline underline-offset-4 hover:text-teal-200"
+              >
                 Register
               </Link>
             </p>

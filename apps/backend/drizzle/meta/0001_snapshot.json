@@ -41,9 +41,7 @@
         "languages_code_unique": {
           "name": "languages_code_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "code"
-          ]
+          "columns": ["code"]
         }
       },
       "policies": {},
@@ -167,12 +165,8 @@
           "name": "users_native_language_id_languages_id_fk",
           "tableFrom": "users",
           "tableTo": "languages",
-          "columnsFrom": [
-            "native_language_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["native_language_id"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "no action"
         },
@@ -180,12 +174,8 @@
           "name": "users_target_language_id_languages_id_fk",
           "tableFrom": "users",
           "tableTo": "languages",
-          "columnsFrom": [
-            "target_language_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["target_language_id"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "no action"
         }
@@ -195,9 +185,7 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},

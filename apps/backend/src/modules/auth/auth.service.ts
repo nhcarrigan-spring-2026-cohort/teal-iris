@@ -5,17 +5,17 @@ import {
   Inject,
   Injectable,
   UnauthorizedException,
-} from "@nestjs/common";
-import { randomBytes } from "crypto";
-import { JwtService } from "@nestjs/jwt";
-import * as bcrypt from "bcrypt";
-import { eq } from "drizzle-orm";
-import { NodePgDatabase } from "drizzle-orm/node-postgres";
+} from '@nestjs/common';
+import { randomBytes } from 'crypto';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+import { eq } from 'drizzle-orm';
+import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 
-import { DRIZZLE } from "../../db/db.module.js";
-import * as schema from "../../db/schema.js";
-import { users, languages } from "../../db/schema.js";
-import { RegisterDto } from "./dto/register.dto.js";
+import { DRIZZLE } from '../../db/db.module.js';
+import * as schema from '../../db/schema.js';
+import { users, languages } from '../../db/schema.js';
+import { RegisterDto } from './dto/register.dto.js';
 
 export interface SafeUser {
   id: string;
@@ -50,12 +50,12 @@ export class AuthService {
     });
 
     if (existingUser) {
-      throw new ConflictException("Email already in use");
+      throw new ConflictException('Email already in use');
     }
 
     if (nativeLanguage === targetLanguage) {
       throw new BadRequestException(
-        "Native and target language must be different",
+        'Native and target language must be different',
       );
     }
 
@@ -79,7 +79,7 @@ export class AuthService {
 
     const passwordHash = await bcrypt.hash(password, 12);
     //verification token
-    const verificationToken = randomBytes(32).toString("hex");
+    const verificationToken = randomBytes(32).toString('hex');
     const verificationTokenExpiry = new Date(Date.now() + 15 * 60 * 1000);
 
     const [user] = await this.db
@@ -94,7 +94,6 @@ export class AuthService {
         emailVerified: null,
         nativeLanguageId: nativeLang.id,
         targetLanguageId: targetLang.id,
-
       })
       .returning({
         id: users.id,
@@ -108,7 +107,7 @@ export class AuthService {
 
     // //log verification url
     const verificationUrl = `http://localhost:3000/auth/verify-email?token=${verificationToken}`;
-    console.log("Email verification URL:", verificationUrl);
+    console.log('Email verification URL:', verificationUrl);
 
     return user;
   }
@@ -119,18 +118,18 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new UnauthorizedException("User with this email was not found");
+      throw new UnauthorizedException('User with this email was not found');
     }
     //block if user is not verified
     if (!user.emailVerified) {
       throw new UnauthorizedException(
-        "Please verify your email before logging in",
+        'Please verify your email before logging in',
       );
     }
 
     const isMatch = await bcrypt.compare(pass, user.passwordHash);
     if (!isMatch) {
-      throw new UnauthorizedException("The password provided is incorrect");
+      throw new UnauthorizedException('The password provided is incorrect');
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -156,11 +155,11 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new BadRequestException("Invalid or expired verification token");
+      throw new BadRequestException('Invalid or expired verification token');
     }
 
     if (user.emailVerified) {
-      throw new BadRequestException("Email is already verified");
+      throw new BadRequestException('Email is already verified');
     }
     if (
       !user.verificationTokenExpiry ||
@@ -175,7 +174,7 @@ export class AuthService {
         .where(eq(users.id, user.id));
 
       throw new BadRequestException(
-        "Verification token has expired. Please request a new one.",
+        'Verification token has expired. Please request a new one.',
       );
     }
 
@@ -188,6 +187,6 @@ export class AuthService {
       })
       .where(eq(users.id, user.id));
 
-    return { message: "Email successfully verified" };
+    return { message: 'Email successfully verified' };
   }
 }

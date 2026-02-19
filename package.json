@@ -10,7 +10,8 @@
     "lint-staged": "lint-staged",
     "lint": "pnpm --filter backend lint && pnpm --filter frontend lint",
     "build": "pnpm --filter backend build && pnpm --filter frontend build",
-    "test": "pnpm --filter backend test"
+    "test": "pnpm --filter backend test",
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "@commitlint/cli": "^20.4.1",

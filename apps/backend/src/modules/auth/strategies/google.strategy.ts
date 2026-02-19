@@ -1,10 +1,10 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { PassportStrategy } from "@nestjs/passport";
-import { Strategy, Profile } from "passport-google-oauth20";
-import type { Request as _Request } from "express";
+import { Injectable, Logger } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { Strategy, Profile } from 'passport-google-oauth20';
+import type { Request as _Request } from 'express';
 
 @Injectable()
-export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
+export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   private readonly logger = new Logger(GoogleStrategy.name);
 
   constructor() {
@@ -27,7 +27,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
       clientID,
       clientSecret,
       callbackURL,
-      scope: ["email", "profile"],
+      scope: ['email', 'profile'],
     });
   }
 

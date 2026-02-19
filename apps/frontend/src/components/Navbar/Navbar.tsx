@@ -1,14 +1,13 @@
-import React from "react";
-import { Container } from "../ui/Container";
-import { Button } from "../ui/Button";
-import Link from "next/link";
-
+import React from 'react';
+import { Container } from '../ui/Container';
+import { Button } from '../ui/Button';
+import Link from 'next/link';
 
 const navItems = [
-  { label: "Home", href: "#home" },
-  { label: "Resources", href: "#resources" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: 'Home', href: '#home' },
+  { label: 'Resources', href: '#resources' },
+  { label: 'About', href: '#about' },
+  { label: 'Contact', href: '#contact' },
 ];
 
 export function Navbar() {
@@ -39,13 +38,11 @@ export function Navbar() {
           </nav>
 
           {/* CTA */}
-            <Link href="/login">
-          <Button>Sign In →</Button>
+          <Link href="/login">
+            <Button>Sign In →</Button>
           </Link>
-
         </div>
       </Container>
     </header>
   );
 }
-

@@ -1,5 +1,5 @@
-import React from "react";
-import { Container } from "../ui/Container";
+import React from 'react';
+import { Container } from '../ui/Container';
 
 export function SectionTitle({
   kicker,

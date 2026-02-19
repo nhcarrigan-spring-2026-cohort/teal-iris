@@ -56,7 +56,6 @@ jobs:
       - name: Run tests
         run: pnpm run test
 
-  
   docker-build:
     name: Docker Build Verification
     runs-on: ubuntu-latest

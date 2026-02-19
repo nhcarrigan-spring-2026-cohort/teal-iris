@@ -1,5 +1,5 @@
 // apps/backend/src/modules/auth/dto/login.dto.ts
-import { IsEmail, IsString, MinLength } from "class-validator";
+import { IsEmail, IsString, MinLength } from 'class-validator';
 
 export class LoginDto {
   @IsEmail()

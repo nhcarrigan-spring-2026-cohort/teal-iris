@@ -1,7 +1,7 @@
-import React from "react";
-import { Container } from "../ui/Container";
-import { Card } from "../ui/Card";
-import { Button } from "../ui/Button";
+import React from 'react';
+import { Container } from '../ui/Container';
+import { Card } from '../ui/Card';
+import { Button } from '../ui/Button';
 
 export function ContactSection() {
   return (
@@ -13,7 +13,9 @@ export function ContactSection() {
           </Card>
 
           <Card>
-            <div className="text-white font-semibold text-xl">Connect & Learn Together</div>
+            <div className="text-white font-semibold text-xl">
+              Connect & Learn Together
+            </div>
             <p className="mt-2 text-white/70 text-sm">
               Send us a message or request early access.
             </p>

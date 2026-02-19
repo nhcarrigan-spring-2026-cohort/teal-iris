@@ -1,12 +1,12 @@
-import { Injectable, NotFoundException, Inject } from "@nestjs/common";
-import { eq, ne, and, count, SQL } from "drizzle-orm";
-import { alias } from "drizzle-orm/pg-core";
-import { NodePgDatabase } from "drizzle-orm/node-postgres";
-import * as schema from "../../db/schema.js";
-import { DRIZZLE } from "../../db/db.module.js";
-import { users, languages } from "../../db/schema.js";
-import { UpdateProfileDto } from "./dto/update-profile.dto.js";
-import { BrowseUsersQueryDto } from "./dto/browse-users-query.dto.js";
+import { Injectable, NotFoundException, Inject } from '@nestjs/common';
+import { eq, ne, and, count, SQL } from 'drizzle-orm';
+import { alias } from 'drizzle-orm/pg-core';
+import { NodePgDatabase } from 'drizzle-orm/node-postgres';
+import * as schema from '../../db/schema.js';
+import { DRIZZLE } from '../../db/db.module.js';
+import { users, languages } from '../../db/schema.js';
+import { UpdateProfileDto } from './dto/update-profile.dto.js';
+import { BrowseUsersQueryDto } from './dto/browse-users-query.dto.js';
 
 @Injectable()
 export class UsersService {
@@ -16,8 +16,8 @@ export class UsersService {
     const { page = 1, limit = 10, learning, speaking } = query;
     const offset = (page - 1) * limit;
 
-    const nativeLang = alias(languages, "native_lang");
-    const targetLang = alias(languages, "target_lang");
+    const nativeLang = alias(languages, 'native_lang');
+    const targetLang = alias(languages, 'target_lang');
 
     const conditions: SQL[] = [ne(users.id, currentUserId)];
 
@@ -82,7 +82,7 @@ export class UsersService {
     });
 
     if (!profile) {
-      throw new NotFoundException("User profile not found");
+      throw new NotFoundException('User profile not found');
     }
 
     return profile;
@@ -111,7 +111,7 @@ export class UsersService {
       });
 
     if (!updatedUser) {
-      throw new NotFoundException("User profile not found");
+      throw new NotFoundException('User profile not found');
     }
 
     return updatedUser;

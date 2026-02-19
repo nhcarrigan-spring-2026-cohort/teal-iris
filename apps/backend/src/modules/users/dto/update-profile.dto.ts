@@ -4,8 +4,8 @@ import {
   Length,
   IsTimeZone,
   ValidateNested,
-} from "class-validator";
-import { Type } from "class-transformer";
+} from 'class-validator';
+import { Type } from 'class-transformer';
 
 class VideoHandlesDto {
   @IsOptional()

@@ -1,7 +1,7 @@
-import React from "react";
-import { Container } from "../ui/Container";
-import { Card } from "../ui/Card";
-import { stats } from "../../utilis/landing";
+import React from 'react';
+import { Container } from '../ui/Container';
+import { Card } from '../ui/Card';
+import { stats } from '../../utilis/landing';
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (
@@ -23,8 +23,9 @@ export function About() {
               Learn together — with confidence.
             </h3>
             <p className="mt-4 text-white/70 leading-relaxed">
-              LinguaLink connects learners with native speakers for language exchange.
-              We make it easy to find the right partner and actually start conversations.
+              LinguaLink connects learners with native speakers for language
+              exchange. We make it easy to find the right partner and actually
+              start conversations.
             </p>
 
             <div className="mt-8 grid grid-cols-2 gap-4">

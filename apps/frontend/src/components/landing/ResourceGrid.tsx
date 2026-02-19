@@ -1,7 +1,7 @@
-import React from "react";
-import { Container } from "../ui/Container";
-import { resources } from "../../utilis/landing";
-import { ResourceCard } from "./ResourceCard";
+import React from 'react';
+import { Container } from '../ui/Container';
+import { resources } from '../../utilis/landing';
+import { ResourceCard } from './ResourceCard';
 
 export function ResourceGrid() {
   return (

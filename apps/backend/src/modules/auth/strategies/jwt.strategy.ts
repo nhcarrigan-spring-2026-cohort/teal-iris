@@ -1,9 +1,9 @@
 // apps/backend/src/modules/auth/strategies/jwt.strategy.ts
-import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { PassportStrategy } from "@nestjs/passport";
-import { ExtractJwt, Strategy } from "passport-jwt";
-import { SafeUser } from "../auth.service.js";
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import { SafeUser } from '../auth.service.js';
 
 interface JwtPayload {
   sub: string;
@@ -16,7 +16,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: configService.get<string>("JWT_SECRET") ?? "fallback-secret",
+      secretOrKey: configService.get<string>('JWT_SECRET') ?? 'fallback-secret',
     });
   }
 

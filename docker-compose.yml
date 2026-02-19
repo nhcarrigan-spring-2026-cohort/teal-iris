@@ -7,11 +7,11 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: teal_iris
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U user -d teal_iris"]
+      test: ['CMD-SHELL', 'pg_isready -U user -d teal_iris']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -22,7 +22,7 @@ services:
       dockerfile: apps/backend/Dockerfile
     container_name: teal-iris-backend
     ports:
-      - "3000:3000"
+      - '3000:3000'
     depends_on:
       db:
         condition: service_healthy
@@ -46,7 +46,7 @@ services:
       dockerfile: apps/frontend/Dockerfile
     container_name: teal-iris-frontend
     ports:
-      - "3001:3000"
+      - '3001:3000'
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:3000
     volumes:

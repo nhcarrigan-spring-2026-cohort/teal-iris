@@ -1,7 +1,7 @@
-import React from "react";
-import { Container } from "../ui/Container";
-import { Card } from "../ui/Card";
-import { features } from "../../utilis/landing";
+import React from 'react';
+import { Container } from '../ui/Container';
+import { Card } from '../ui/Card';
+import { features } from '../../utilis/landing';
 
 export function FeatureGrid() {
   return (
@@ -13,7 +13,9 @@ export function FeatureGrid() {
               <div className="h-10 w-10 rounded-xl bg-emerald-500/15 border border-emerald-400/20" />
               <div>
                 <div className="text-white font-semibold">{f.title}</div>
-                <div className="text-sm text-white/70 leading-relaxed">{f.desc}</div>
+                <div className="text-sm text-white/70 leading-relaxed">
+                  {f.desc}
+                </div>
               </div>
             </Card>
           ))}

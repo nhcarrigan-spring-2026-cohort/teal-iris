@@ -1,23 +1,27 @@
 # teal-iris
+
 Repository for Team teal-iris - Spring 2026 Cohort. It is structured as a monorepo containing both the backend and frontend applications.
 
 ## Tech Stack
 
 **Backend**
-* NestJS (Node.js framework)
-* TypeScript
-* pnpm (Package manager)
-* Drizzle (ORM)
+
+- NestJS (Node.js framework)
+- TypeScript
+- pnpm (Package manager)
+- Drizzle (ORM)
 
 **Frontend**
-* Next.js (React framework)
-* TypeScript
-* Tailwind CSS
+
+- Next.js (React framework)
+- TypeScript
+- Tailwind CSS
 
 **DevOps & Tooling**
-* Docker & Docker Compose
-* Husky (Git hooks for linting and formatting)
-* GitHub Actions (CI/CD)
+
+- Docker & Docker Compose
+- Husky (Git hooks for linting and formatting)
+- GitHub Actions (CI/CD)
 
 ## Repository Structure
 
@@ -41,38 +45,37 @@ Repository for Team teal-iris - Spring 2026 Cohort. It is structured as a monore
 ├── LICENSE               # Project License
 ├── docker-compose.yml    # Service orchestration
 ├── package.json          # Root configuration & scripts
-└── README.md             # Project documentation 
+└── README.md             # Project documentation
 
-```   
+```
 
 ## Project Team
 
 ### Project Co-Leads
 
-| Role | Discord | LinkedIn | GitHub |
-| ------ | ------ | ---------- | -------- |
+| Role    | Discord    | LinkedIn                                                           | GitHub                                  |
+| ------- | ---------- | ------------------------------------------------------------------ | --------------------------------------- |
 | Co-Lead | BridgetKas | [LinkedIn](https://www.linkedin.com/in/bridget-namugga-3a1b02166/) | [GitHub](https://github.com/BridgetKas) |
-| Co-Lead | NewSmoke38 | [LinkedIn](https://www.linkedin.com/in/shivani-backend/) | [GitHub](https://github.com/NewSmoke38) |
+| Co-Lead | NewSmoke38 | [LinkedIn](https://www.linkedin.com/in/shivani-backend/)           | [GitHub](https://github.com/NewSmoke38) |
 
 ### Frontend Team
 
-| Role | Discord | LinkedIn | GitHub |
-|------|------|----------|--------|
-| Contributor | Samuell | [LinkedIn](https://www.linkedin.com/in/samuel-n-brown/)  | [GitHub](https://github.com/TraveledTiger) |
-| Contributor | Sniper | [LinkedIn](https://www.linkedin.com/in/azamjiva/)   | [GitHub](https://github.com/ajiva84) |
-| Contributor | VooDooRe |  [LinkedIn](http://www.linkedin.com/in/nurmukhammad-sayfiddinov-3709851bb)  | [GitHub](https://github.com/nurmukhammad03) |
-| Contributor | DayDayUp23 | [LinkedIn](https://www.linkedin.com/in/william-d-miller-jr) | [GitHub](https://github.com/bijiyiqi2017) |
-
+| Role        | Discord    | LinkedIn                                                                  | GitHub                                      |
+| ----------- | ---------- | ------------------------------------------------------------------------- | ------------------------------------------- |
+| Contributor | Samuell    | [LinkedIn](https://www.linkedin.com/in/samuel-n-brown/)                   | [GitHub](https://github.com/TraveledTiger)  |
+| Contributor | Sniper     | [LinkedIn](https://www.linkedin.com/in/azamjiva/)                         | [GitHub](https://github.com/ajiva84)        |
+| Contributor | VooDooRe   | [LinkedIn](http://www.linkedin.com/in/nurmukhammad-sayfiddinov-3709851bb) | [GitHub](https://github.com/nurmukhammad03) |
+| Contributor | DayDayUp23 | [LinkedIn](https://www.linkedin.com/in/william-d-miller-jr)               | [GitHub](https://github.com/bijiyiqi2017)   |
 
 ### Backend Team
 
-| Role | Discord | LinkedIn | GitHub |
-|------|------|----------|--------|
-| Contributor | Tihomir| [LinkedIn](https://www.linkedin.com/in/tihomir-manushev-066782b3/) | [GitHub](https://github.com/haraGADygyl) |
-|Contributor | SirLancelot | [LinkedIn](https://www.linkedin.com/in/pragyan-srivastava-ba3b24383/) | [GitHub](https://github.com/SirLancelot-13) |
-|Contributor | abhisar |  [LinkedIn](https://www.linkedin.com/in/abhisar-kumar-588ab7226)  | [GitHub](https://github.com/abhisar7) |
-|Contributor | RitamJuniorPal |  [LinkedIn](https://www.linkedin.com/in/ritam-pal-124175244/)  | [GitHub](https://github.com/RitamPal26) |
-|Contributor | Ayushi  |  [LinkedIn](https://www.linkedin.com/in/ayushi-agrawal-216582234/)  | [GitHub](https://github.com/19-ayushi)|
+| Role        | Discord        | LinkedIn                                                              | GitHub                                      |
+| ----------- | -------------- | --------------------------------------------------------------------- | ------------------------------------------- |
+| Contributor | Tihomir        | [LinkedIn](https://www.linkedin.com/in/tihomir-manushev-066782b3/)    | [GitHub](https://github.com/haraGADygyl)    |
+| Contributor | SirLancelot    | [LinkedIn](https://www.linkedin.com/in/pragyan-srivastava-ba3b24383/) | [GitHub](https://github.com/SirLancelot-13) |
+| Contributor | abhisar        | [LinkedIn](https://www.linkedin.com/in/abhisar-kumar-588ab7226)       | [GitHub](https://github.com/abhisar7)       |
+| Contributor | RitamJuniorPal | [LinkedIn](https://www.linkedin.com/in/ritam-pal-124175244/)          | [GitHub](https://github.com/RitamPal26)     |
+| Contributor | Ayushi         | [LinkedIn](https://www.linkedin.com/in/ayushi-agrawal-216582234/)     | [GitHub](https://github.com/19-ayushi)      |
 
 ## Getting Started
 

@@ -1,10 +1,9 @@
-import React from "react";
-import { Container } from "../ui/Container";
-import { Button } from "../ui/Button";
+import React from 'react';
+import { Container } from '../ui/Container';
+import { Button } from '../ui/Button';
 
 export function Hero() {
   return (
-  
     <section className="relative overflow-hidden" id="home">
       {/* Glow blobs */}
       <div className="pointer-events-none absolute -top-40 left-1/2 h-130 w-130 -translate-x-1/2 rounded-full bg-emerald-500/20 blur-3xl" />
@@ -14,13 +13,13 @@ export function Hero() {
         <div className=" text-center py-16 md:py-24">
           <div className="max-w-3xl">
             <h1 className="text-left text-4xl md:text-6xl font-semibold tracking-tight text-white">
-              Practice Languages with{" "}
+              Practice Languages with{' '}
               <span className="italic text-emerald-300">Real People</span>
             </h1>
 
             <p className="mt-5 text-white/70 max-w-2xl leading-relaxed">
-              Match with native speakers based on language goals, availability, and interests.
-              Everyone teaches. Everyone learns.
+              Match with native speakers based on language goals, availability,
+              and interests. Everyone teaches. Everyone learns.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -40,8 +39,8 @@ export function Hero() {
                 ))}
               </div>
               <div>
-                <span className="text-white font-medium">20,000+</span> learners •{" "}
-                <span className="text-emerald-300">4.7★</span> ratings
+                <span className="text-white font-medium">20,000+</span> learners
+                • <span className="text-emerald-300">4.7★</span> ratings
               </div>
             </div>
           </div>
@@ -50,4 +49,3 @@ export function Hero() {
     </section>
   );
 }
-

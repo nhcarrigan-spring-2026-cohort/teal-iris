@@ -1,6 +1,6 @@
-import React from "react";
-import { Card } from "../ui/Card";
-import { Button } from "../ui/Button";
+import React from 'react';
+import { Card } from '../ui/Card';
+import { Button } from '../ui/Button';
 
 export function ResourceCard({ title, desc }: { title: string; desc: string }) {
   return (
