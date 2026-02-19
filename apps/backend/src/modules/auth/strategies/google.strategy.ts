@@ -41,9 +41,11 @@ export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
     const name = profile.displayName;
 
     if (!email) {
-      throw new Error("Google account has no email");
+      this.logger.error("Google profile returned without an email");
+      throw new Error("No email found in Google profile");
     }
 
+    // Check if user exists
     let user = await this.usersService.findByEmail(email);
 
     if (!user) {

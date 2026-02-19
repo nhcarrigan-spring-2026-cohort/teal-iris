@@ -15,22 +15,17 @@ import { UsersModule } from "../users/users.module.js";
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: path.resolve(process.cwd(), "../../.env"), // root .env (monorepo safe)
+      envFilePath: path.resolve(process.cwd(), "../../.env"), // monorepo safe
     }),
-
     PassportModule,
-
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService): JwtModuleOptions => {
-        const secret =
-          configService.get<string>("JWT_SECRET") ?? "fallback-secret";
-        const expiresInEnv =
-          configService.get<string>("JWT_EXPIRATION") ?? "3600";
+        const secret = configService.get<string>("JWT_SECRET") ?? "fallback-secret";
+        const expiresInEnv = configService.get<string>("JWT_EXPIRATION") ?? "3600";
 
         let expiresInSeconds: number;
-
         if (/^\d+$/.test(expiresInEnv)) {
           expiresInSeconds = parseInt(expiresInEnv, 10);
         } else if (/^\d+h$/.test(expiresInEnv)) {
@@ -45,16 +40,10 @@ import { UsersModule } from "../users/users.module.js";
         };
       },
     }),
-
     UsersModule,
   ],
   controllers: [AuthController],
-  providers: [
-    AuthService,
-    LocalStrategy,
-    JwtStrategy,
-    GoogleStrategy,
-  ],
+  providers: [AuthService, LocalStrategy, JwtStrategy, GoogleStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}
