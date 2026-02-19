@@ -29,6 +29,9 @@ services:
     environment:
       - DATABASE_URL=postgres://user:password@db:5432/teal_iris
       - PORT=3000
+      - GOOGLE_CLIENT_ID= ${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET= ${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_CALLBACK_URL= ${GOOGLE_CALLBACK_URL}
     volumes:
       # Hot reload: sync source code
       - ./apps/backend/src:/app/apps/backend/src

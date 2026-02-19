@@ -10,7 +10,9 @@ import {
   UseGuards,
   Req,
   Res,
+  Query,
 } from "@nestjs/common";
+
 import { AuthGuard } from "@nestjs/passport";
 import type { Request as ExpressRequest, Response } from "express";
 import { AuthService, SafeUser } from "./auth.service.js";
@@ -66,5 +68,10 @@ export class AuthController {
     res.redirect(
       `http://localhost:3000/auth/callback?token=${result.accessToken}`,
     );
+  }
+
+  @Get("verify")
+  async verifyEmail(@Query("token") token: string) {
+    return this.authService.verifyEmail(token);
   }
 }

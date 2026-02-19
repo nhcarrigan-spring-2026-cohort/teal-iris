@@ -1,3 +1,7 @@
+
+// Placeholder for Drizzle schema
+// Will be populated in Phase 2 when Docker/PostgreSQL is set up
+
 import {
   index,
   jsonb,
@@ -23,6 +27,9 @@ export const users = pgTable(
     passwordHash: text("password_hash").notNull(),
     firstName: varchar("first_name", { length: 100 }),
     lastName: varchar("last_name", { length: 100 }),
+    emailVerified: timestamp("email_verified"),
+    verificationToken: varchar("verification_token", { length: 255 }),
+    verificationTokenExpiry: timestamp("verification_token_expiry"),
     nativeLanguageId: uuid("native_language_id")
       .notNull()
       .references(() => languages.id, { onDelete: "restrict" }),

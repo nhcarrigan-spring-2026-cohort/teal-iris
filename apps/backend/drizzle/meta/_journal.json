@@ -15,6 +15,20 @@
       "when": 1771308404266,
       "tag": "0001_wet_patch",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1771297164691,
+      "tag": "0002_sloppy_the_renegades",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1771380556437,
+      "tag": "0003_icy_lilith",
+      "breakpoints": true
     }
   ]
 }
