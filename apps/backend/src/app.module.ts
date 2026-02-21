@@ -7,6 +7,7 @@ import { HealthController } from "./modules/health/health.controller.js";
 import { AuthModule } from "./modules/auth/auth.module.js";
 import { DbModule } from "./db/db.module.js";
 import { UsersModule } from "./modules/users/users.module.js";
+import { ConnectionsModule } from "./modules/connections/connections.module.js";
 
 // -------------------------------
 // APP MODULE
@@ -20,6 +21,7 @@ import { UsersModule } from "./modules/users/users.module.js";
     DbModule,
     AuthModule,
     UsersModule,
+    ConnectionsModule,
   ],
   controllers: [HealthController],
   providers: [],

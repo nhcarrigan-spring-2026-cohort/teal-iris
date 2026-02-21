@@ -9,7 +9,13 @@ import {
   varchar,
   text,
   timestamp,
+  pgEnum,
 } from "drizzle-orm/pg-core";
+
+export const connectionStatusEnum = pgEnum("connection_status", [
+  "PENDING",
+  "ACCEPTED",
+]);
 
 export const languages = pgTable("languages", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -45,5 +51,25 @@ export const users = pgTable(
   (table) => [
     index("users_native_language_id_idx").on(table.nativeLanguageId),
     index("users_target_language_id_idx").on(table.targetLanguageId),
+  ],
+);
+
+export const connections = pgTable(
+  "connections",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    senderId: uuid("sender_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    receiverId: uuid("receiver_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    status: connectionStatusEnum("status").default("PENDING").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => [
+    index("connections_sender_id_idx").on(table.senderId),
+    index("connections_receiver_id_idx").on(table.receiverId),
   ],
 );

@@ -106,7 +106,7 @@ export class AuthService {
       });
 
     // //log verification url
-    const verificationUrl = `http://localhost:3000/auth/verify-email?token=${verificationToken}`;
+    const verificationUrl = `http://localhost:3000/auth/verify?token=${verificationToken}`;
     console.log("Email verification URL:", verificationUrl);
 
     return user;

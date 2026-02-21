@@ -29,6 +29,13 @@
       "when": 1771380556437,
       "tag": "0003_icy_lilith",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1771689545333,
+      "tag": "0004_bouncy_logan",
+      "breakpoints": true
     }
   ]
 }
