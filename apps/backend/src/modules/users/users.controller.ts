@@ -18,28 +18,29 @@ import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard.js";
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  // -----------------------
+  // Get current user's profile
+  // -----------------------
   @Get("me")
   async getProfile(@Request() req) {
     return this.usersService.getProfile(req.user.id);
   }
 
+  // -----------------------
+  // Update current user's profile
+  // -----------------------
   @Patch("me")
-  async updateProfile(
-    @Request() req,
-    @Body() dto: UpdateProfileDto,
-  ) {
+  async updateProfile(@Request() req, @Body() dto: UpdateProfileDto) {
     return this.usersService.updateProfile(req.user.id, dto);
   }
 
+  // -----------------------
+  // Browse other users
+  // -----------------------
   @Get()
-  async browseUsers(
-    @Request() req,
-    @Query() query: BrowseUsersQueryDto,
-  ) {
-    return this.usersService.browseUsers(
-      req.user.id,
-      query.page ?? 1,
-      query.limit ?? 10,
-    );
+  async browseUsers(@Request() req, @Query() query: BrowseUsersQueryDto) {
+    const page = query.page ?? 1;
+    const limit = query.limit ?? 10;
+    return this.usersService.browseUsers(req.user.id, query);
   }
 }
