@@ -1,3 +1,4 @@
+// apps/frontend/src/app/layout.tsx
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { useAuthStore } from "../src/store/useAuthStore"; // import store
@@ -20,11 +21,7 @@ export const metadata = {
 };
 
 // --- Root Layout ---
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   // Initialize Auth store (SSR safe)
   useAuthStore.getState().initialize();
 

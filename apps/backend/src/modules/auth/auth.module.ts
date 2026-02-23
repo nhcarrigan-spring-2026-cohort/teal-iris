@@ -1,29 +1,32 @@
+// apps/backend/src/modules/auth/auth.module.ts
 import { Module } from "@nestjs/common";
-import { JwtModule, JwtModuleOptions } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
+import { JwtModule, JwtModuleOptions } from "@nestjs/jwt";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import path from "path";
 
 import { AuthController } from "./auth.controller.js";
 import { AuthService } from "./auth.service.js";
-import { LocalStrategy } from "./strategies/local.strategy.js";
-import { JwtStrategy } from "./strategies/jwt.strategy.js";
+import { JwtStrategy } from "./jwt.strategy.js";
 import { GoogleStrategy } from "./strategies/google.strategy.js";
 import { UsersModule } from "../users/users.module.js";
 
 @Module({
   imports: [
+    // ConfigModule configured for monorepo-safe .env
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: path.resolve(process.cwd(), "../../.env"), // monorepo safe
+      envFilePath: path.resolve(process.cwd(), "../../.env"),
     }),
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService): JwtModuleOptions => {
-        const secret = configService.get<string>("JWT_SECRET") ?? "fallback-secret";
-        const expiresInEnv = configService.get<string>("JWT_EXPIRATION") ?? "3600";
+        const secret =
+          configService.get<string>("JWT_SECRET") ?? "fallback-secret";
+        const expiresInEnv =
+          configService.get<string>("JWT_EXPIRATION") ?? "3600";
 
         let expiresInSeconds: number;
         if (/^\d+$/.test(expiresInEnv)) {
@@ -42,8 +45,8 @@ import { UsersModule } from "../users/users.module.js";
     }),
     UsersModule,
   ],
+  providers: [AuthService, JwtStrategy, GoogleStrategy],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy, GoogleStrategy],
-  exports: [AuthService],
+  exports: [AuthService, JwtModule],
 })
 export class AuthModule {}

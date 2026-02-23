@@ -4,7 +4,6 @@ import { ConfigModule } from "@nestjs/config";
 
 import { AppController } from "./app.controller.js"; // ESM-compatible
 import { HealthController } from "./modules/health/health.controller.js"; // include HealthController
-
 import { AuthModule } from "./modules/auth/auth.module.js";
 import { DbModule } from "./db/db.module.js";
 import { UsersModule } from "./modules/users/users.module.js";
@@ -14,14 +13,14 @@ import { ConnectionsModule } from "./modules/connections/connections.module.js";
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: "../../.env", // root-level .env
+      envFilePath: "../../.env", // use root-level .env
     }),
-    DbModule,
     AuthModule,
+    DbModule,
     UsersModule,
     ConnectionsModule,
   ],
   controllers: [AppController, HealthController],
-  providers: [],
+  providers: [], // keep empty if no providers
 })
 export class AppModule {}

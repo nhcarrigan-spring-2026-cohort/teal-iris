@@ -1,8 +1,9 @@
+// apps/backend/src/modules/auth/strategies/google.strategy.ts
 import { Injectable, Logger } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy, Profile } from "passport-google-oauth20";
+import { UsersService, User } from "../../users/users.service.js";
 import { ConfigService } from "@nestjs/config";
-import { UsersService } from "../../users/users.service.js";
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
@@ -10,8 +11,9 @@ export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
 
   constructor(
     private readonly usersService: UsersService,
-    private readonly configService: ConfigService,
+    private readonly configService: ConfigService, // ✅ mark as private for Nest injection
   ) {
+    // Fetch config values BEFORE calling super
     const clientID = configService.get<string>("GOOGLE_CLIENT_ID");
     const clientSecret = configService.get<string>("GOOGLE_CLIENT_SECRET");
     const callbackURL = configService.get<string>("GOOGLE_CALLBACK_URL");
@@ -29,6 +31,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
       scope: ["email", "profile"],
     });
 
+    // Optional: log for debugging
     this.logger.log(`GoogleStrategy initialized`);
   }
 
@@ -36,7 +39,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
     accessToken: string,
     refreshToken: string,
     profile: Profile,
-  ) {
+  ): Promise<User> {
     const email = profile.emails?.[0]?.value;
     const name = profile.displayName;
 

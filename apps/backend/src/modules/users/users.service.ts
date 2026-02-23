@@ -52,7 +52,10 @@ export class UsersService {
     const defaultLanguage = await this.db.query.languages.findFirst({
       where: eq(languages.code, "en"),
     });
-    if (!defaultLanguage) throw new Error("Default language 'en' not found");
+
+    if (!defaultLanguage) {
+      throw new Error("Default language 'en' not found");
+    }
 
     const [newUser] = await this.db
       .insert(users)
@@ -82,7 +85,10 @@ export class UsersService {
       where: eq(users.id, userId),
       columns: { passwordHash: false },
     });
-    if (!profile) throw new NotFoundException("User profile not found");
+
+    if (!profile) {
+      throw new NotFoundException("User profile not found");
+    }
 
     return {
       ...profile,
@@ -96,11 +102,16 @@ export class UsersService {
   async updateProfile(userId: string, dto: Partial<UpdateProfileDto>) {
     const [updatedUser] = await this.db
       .update(users)
-      .set({ ...dto, updatedAt: new Date() })
+      .set({
+        ...dto,
+        updatedAt: new Date(),
+      })
       .where(eq(users.id, userId))
       .returning();
 
-    if (!updatedUser) throw new NotFoundException("User profile not found");
+    if (!updatedUser) {
+      throw new NotFoundException("User profile not found");
+    }
 
     return {
       ...updatedUser,
@@ -113,11 +124,22 @@ export class UsersService {
   // -----------------------
   async browseUsers(currentUserId: string, query: BrowseUsersQueryDto) {
     const { page = 1, limit = 10, learning, speaking } = query;
+
     const offset = (page - 1) * limit;
 
-    const whereClause = and(ne(users.id, currentUserId));
+    const conditions = [ne(users.id, currentUserId)];
 
-    const [data, [{ totalCount }]] = await Promise.all([
+    if (learning) {
+      conditions.push(eq(users.targetLanguageId, learning));
+    }
+
+    if (speaking) {
+      conditions.push(eq(users.nativeLanguageId, speaking));
+    }
+
+    const whereClause = and(...conditions);
+
+    const [data, countResult] = await Promise.all([
       this.db
         .select({
           id: users.id,
@@ -137,8 +159,13 @@ export class UsersService {
       this.db.select({ totalCount: count() }).from(users).where(whereClause),
     ]);
 
+    const totalCount = countResult[0]?.totalCount ?? 0;
+
     return {
-      data: data.map((u) => ({ ...u, videoHandles: u.videoHandles ?? [] })),
+      data: data.map((u) => ({
+        ...u,
+        videoHandles: u.videoHandles ?? [],
+      })),
       meta: {
         page,
         limit,

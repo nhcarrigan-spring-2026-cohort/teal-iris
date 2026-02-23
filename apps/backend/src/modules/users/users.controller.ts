@@ -35,12 +35,13 @@ export class UsersController {
   }
 
   // -----------------------
-  // Browse other users
+  // Browse other users (with pagination)
   // -----------------------
   @Get()
   async browseUsers(@Request() req, @Query() query: BrowseUsersQueryDto) {
     const page = query.page ?? 1;
     const limit = query.limit ?? 10;
-    return this.usersService.browseUsers(req.user.id, query);
+
+    return this.usersService.browseUsers(req.user.id, page, limit, query);
   }
 }
