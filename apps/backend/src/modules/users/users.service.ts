@@ -36,7 +36,7 @@ export class UsersService {
   // -----------------------
   // Find user by email
   // -----------------------
-  async findByEmail(email: string) {
+  async findByEmail(email: string): Promise<User | null> {
     return this.db.query.users.findFirst({
       where: eq(users.email, email),
     });
@@ -45,7 +45,7 @@ export class UsersService {
   // -----------------------
   // Create user (regular or OAuth)
   // -----------------------
-  async createUser(email: string, name?: string) {
+  async createUser(email: string, name?: string): Promise<User> {
     const firstName = name?.split(" ")[0] ?? null;
     const lastName = name?.split(" ")[1] ?? null;
 
@@ -80,7 +80,7 @@ export class UsersService {
   // -----------------------
   // Get current user profile
   // -----------------------
-  async getProfile(userId: string) {
+  async getProfile(userId: string): Promise<Omit<User, "passwordHash">> {
     const profile = await this.db.query.users.findFirst({
       where: eq(users.id, userId),
       columns: { passwordHash: false },
@@ -99,7 +99,10 @@ export class UsersService {
   // -----------------------
   // Update user profile
   // -----------------------
-  async updateProfile(userId: string, dto: Partial<UpdateProfileDto>) {
+  async updateProfile(
+    userId: string,
+    dto: Partial<UpdateProfileDto>,
+  ): Promise<Omit<User, "passwordHash">> {
     const [updatedUser] = await this.db
       .update(users)
       .set({
@@ -122,10 +125,23 @@ export class UsersService {
   // -----------------------
   // Browse users with filters and pagination
   // -----------------------
-  async browseUsers(currentUserId: string, query: BrowseUsersQueryDto) {
+  async browseUsers(
+    currentUserId: string,
+    query: BrowseUsersQueryDto,
+  ): Promise<{
+    data: Omit<User, "passwordHash">[];
+    meta: {
+      page: number;
+      limit: number;
+      totalCount: number;
+      totalPages: number;
+    };
+  }> {
     const { page = 1, limit = 10, learning, speaking } = query;
 
-    const offset = (page - 1) * limit;
+    // Clamp limit for safety
+    const safeLimit = Math.min(limit, 50);
+    const offset = (page - 1) * safeLimit;
 
     const conditions = [ne(users.id, currentUserId)];
 
@@ -153,7 +169,7 @@ export class UsersService {
         })
         .from(users)
         .where(whereClause)
-        .limit(limit)
+        .limit(safeLimit)
         .offset(offset),
 
       this.db.select({ totalCount: count() }).from(users).where(whereClause),
@@ -168,9 +184,9 @@ export class UsersService {
       })),
       meta: {
         page,
-        limit,
+        limit: safeLimit,
         totalCount,
-        totalPages: Math.ceil(totalCount / limit),
+        totalPages: Math.ceil(totalCount / safeLimit),
       },
     };
   }
