@@ -8,9 +8,6 @@ import { UpdateProfileDto } from "./dto/update-profile.dto.js";
 import { BrowseUsersQueryDto } from "./dto/browse-users-query.dto.js";
 import { users, languages } from "../../db/schema.js";
 
-// -----------------------
-// User types
-// -----------------------
 export interface User {
   id: string;
   email: string;
@@ -33,18 +30,14 @@ export class UsersService {
     private readonly db: NodePgDatabase<typeof schema>,
   ) {}
 
-  // -----------------------
-  // Find user by email
-  // -----------------------
   async findByEmail(email: string): Promise<User | null> {
-    return this.db.query.users.findFirst({
+    const user = await this.db.query.users.findFirst({
       where: eq(users.email, email),
     });
+    if (!user) return null;
+    return { ...user, videoHandles: user.videoHandles ?? [] };
   }
 
-  // -----------------------
-  // Create user (regular or OAuth)
-  // -----------------------
   async createUser(email: string, name?: string): Promise<User> {
     const firstName = name?.split(" ")[0] ?? null;
     const lastName = name?.split(" ")[1] ?? null;
@@ -52,16 +45,13 @@ export class UsersService {
     const defaultLanguage = await this.db.query.languages.findFirst({
       where: eq(languages.code, "en"),
     });
-
-    if (!defaultLanguage) {
-      throw new Error("Default language 'en' not found");
-    }
+    if (!defaultLanguage) throw new Error("Default language 'en' not found");
 
     const [newUser] = await this.db
       .insert(users)
       .values({
         email,
-        passwordHash: "", // OAuth placeholder
+        passwordHash: "",
         firstName,
         lastName,
         nativeLanguageId: defaultLanguage.id,
@@ -74,57 +64,32 @@ export class UsersService {
       })
       .returning();
 
-    return newUser;
+    return { ...newUser, videoHandles: newUser.videoHandles ?? [] };
   }
 
-  // -----------------------
-  // Get current user profile
-  // -----------------------
   async getProfile(userId: string): Promise<Omit<User, "passwordHash">> {
     const profile = await this.db.query.users.findFirst({
       where: eq(users.id, userId),
       columns: { passwordHash: false },
     });
-
-    if (!profile) {
-      throw new NotFoundException("User profile not found");
-    }
-
-    return {
-      ...profile,
-      videoHandles: profile.videoHandles ?? [],
-    };
+    if (!profile) throw new NotFoundException("User profile not found");
+    return { ...profile, videoHandles: profile.videoHandles ?? [] };
   }
 
-  // -----------------------
-  // Update user profile
-  // -----------------------
   async updateProfile(
     userId: string,
     dto: Partial<UpdateProfileDto>,
   ): Promise<Omit<User, "passwordHash">> {
     const [updatedUser] = await this.db
       .update(users)
-      .set({
-        ...dto,
-        updatedAt: new Date(),
-      })
+      .set({ ...dto, updatedAt: new Date() })
       .where(eq(users.id, userId))
       .returning();
 
-    if (!updatedUser) {
-      throw new NotFoundException("User profile not found");
-    }
-
-    return {
-      ...updatedUser,
-      videoHandles: updatedUser.videoHandles ?? [],
-    };
+    if (!updatedUser) throw new NotFoundException("User profile not found");
+    return { ...updatedUser, videoHandles: updatedUser.videoHandles ?? [] };
   }
 
-  // -----------------------
-  // Browse users with filters and pagination
-  // -----------------------
   async browseUsers(
     currentUserId: string,
     query: BrowseUsersQueryDto,
@@ -138,20 +103,12 @@ export class UsersService {
     };
   }> {
     const { page = 1, limit = 10, learning, speaking } = query;
-
-    // Clamp limit for safety
-    const safeLimit = Math.min(limit, 50);
-    const offset = (page - 1) * safeLimit;
+    const offset = (page - 1) * limit;
+    const clampedLimit = Math.min(limit, 100);
 
     const conditions = [ne(users.id, currentUserId)];
-
-    if (learning) {
-      conditions.push(eq(users.targetLanguageId, learning));
-    }
-
-    if (speaking) {
-      conditions.push(eq(users.nativeLanguageId, speaking));
-    }
+    if (learning) conditions.push(eq(users.targetLanguageId, learning));
+    if (speaking) conditions.push(eq(users.nativeLanguageId, speaking));
 
     const whereClause = and(...conditions);
 
@@ -159,6 +116,7 @@ export class UsersService {
       this.db
         .select({
           id: users.id,
+          email: users.email,
           firstName: users.firstName,
           lastName: users.lastName,
           bio: users.bio,
@@ -166,27 +124,25 @@ export class UsersService {
           videoHandles: users.videoHandles,
           nativeLanguageId: users.nativeLanguageId,
           targetLanguageId: users.targetLanguageId,
+          createdAt: users.createdAt,
+          updatedAt: users.updatedAt,
         })
         .from(users)
         .where(whereClause)
-        .limit(safeLimit)
+        .limit(clampedLimit)
         .offset(offset),
-
       this.db.select({ totalCount: count() }).from(users).where(whereClause),
     ]);
 
     const totalCount = countResult[0]?.totalCount ?? 0;
 
     return {
-      data: data.map((u) => ({
-        ...u,
-        videoHandles: u.videoHandles ?? [],
-      })),
+      data: data.map((u) => ({ ...u, videoHandles: u.videoHandles ?? [] })),
       meta: {
         page,
-        limit: safeLimit,
+        limit: clampedLimit,
         totalCount,
-        totalPages: Math.ceil(totalCount / safeLimit),
+        totalPages: Math.ceil(totalCount / clampedLimit),
       },
     };
   }
