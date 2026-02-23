@@ -1,6 +1,5 @@
 import { Controller, Post, Body } from "@nestjs/common";
-import { AuthService } from "./auth.service.js";
-import { User } from "../users/users.service.js";
+import { AuthService, SafeUser } from "./auth.service.js";
 
 @Controller("auth")
 export class AuthController {
@@ -10,24 +9,21 @@ export class AuthController {
   async login(
     @Body("email") email: string,
     @Body("password") password: string,
-  ): Promise<{ token: string; user: User | null }> {
+  ): Promise<SafeUser | null> {
     const user = await this.authService.validateUser(email, password);
-    if (!user) throw new Error("Invalid credentials");
-
-    const token = await this.authService.generateJwt(user);
-    return { token, user };
+    return user ? { ...user } : null;
   }
 
   @Post("verify-email")
-  async verifyEmail(
-    @Body("token") token: string,
-  ): Promise<{ success: boolean }> {
-    const success = await this.authService.verifyEmail(token);
-    return { success };
+  async verifyEmail(@Body("token") token: string): Promise<boolean> {
+    return this.authService.verifyEmail(token);
   }
 
   @Post("oauth-login")
-  async oauthLogin(@Body("providerCode") providerCode: string): Promise<User> {
-    return this.authService.oauthLogin(providerCode);
+  async oauthLogin(
+    @Body("providerCode") providerCode: string,
+  ): Promise<SafeUser> {
+    const user = await this.authService.oauthLogin(providerCode);
+    return { ...user };
   }
 }

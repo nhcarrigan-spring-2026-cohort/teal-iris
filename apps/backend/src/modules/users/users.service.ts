@@ -1,13 +1,13 @@
-import { Injectable, Inject, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, Inject } from "@nestjs/common";
 import { eq, ne, and, count } from "drizzle-orm";
 import { NodePgDatabase } from "drizzle-orm/node-postgres";
-
 import * as schema from "../../db/schema.js";
 import { DRIZZLE } from "../../db/db.module.js";
 import { UpdateProfileDto } from "./dto/update-profile.dto.js";
 import { BrowseUsersQueryDto } from "./dto/browse-users-query.dto.js";
 import { users, languages } from "../../db/schema.js";
 
+// User type
 export interface User {
   id: string;
   email: string;
@@ -23,6 +23,9 @@ export interface User {
   updatedAt: Date;
 }
 
+// SafeUser type for exposing without passwordHash
+export type SafeUser = Omit<User, "passwordHash">;
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -34,8 +37,7 @@ export class UsersService {
     const user = await this.db.query.users.findFirst({
       where: eq(users.email, email),
     });
-    if (!user) return null;
-    return { ...user, videoHandles: user.videoHandles ?? [] };
+    return user ? { ...user, videoHandles: user.videoHandles ?? [] } : null;
   }
 
   async createUser(email: string, name?: string): Promise<User> {
@@ -67,7 +69,7 @@ export class UsersService {
     return { ...newUser, videoHandles: newUser.videoHandles ?? [] };
   }
 
-  async getProfile(userId: string): Promise<Omit<User, "passwordHash">> {
+  async getProfile(userId: string): Promise<SafeUser> {
     const profile = await this.db.query.users.findFirst({
       where: eq(users.id, userId),
       columns: { passwordHash: false },
@@ -79,10 +81,17 @@ export class UsersService {
   async updateProfile(
     userId: string,
     dto: Partial<UpdateProfileDto>,
-  ): Promise<Omit<User, "passwordHash">> {
+  ): Promise<SafeUser> {
     const [updatedUser] = await this.db
       .update(users)
-      .set({ ...dto, updatedAt: new Date() })
+      .set({
+        ...dto,
+        updatedAt: new Date(),
+        // Ensure videoHandles is always string[]
+        videoHandles: Array.isArray(dto.videoHandles)
+          ? [...dto.videoHandles]
+          : [],
+      })
       .where(eq(users.id, userId))
       .returning();
 
@@ -94,7 +103,7 @@ export class UsersService {
     currentUserId: string,
     query: BrowseUsersQueryDto,
   ): Promise<{
-    data: Omit<User, "passwordHash">[];
+    data: SafeUser[];
     meta: {
       page: number;
       limit: number;

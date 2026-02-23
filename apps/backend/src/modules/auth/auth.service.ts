@@ -1,9 +1,11 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { Injectable, Inject, UnauthorizedException } from "@nestjs/common";
 import { eq } from "drizzle-orm";
 import { NodePgDatabase } from "drizzle-orm/node-postgres";
 import * as schema from "../../db/schema.js";
 import { DRIZZLE } from "../../db/db.module.js";
 import { User } from "../users/users.service.js";
+
+export type SafeUser = Omit<User, "passwordHash">;
 
 @Injectable()
 export class AuthService {
@@ -12,48 +14,33 @@ export class AuthService {
     private readonly db: NodePgDatabase<typeof schema>,
   ) {}
 
-  /**
-   * Validate user login by email and password
-   */
-  async validateUser(email: string, password: string): Promise<User | null> {
+  async validateUser(email: string, password: string): Promise<SafeUser> {
     const user = await this.db.query.users.findFirst({
       where: eq(schema.users.email, email),
     });
 
-    if (!user) return null;
+    if (!user) throw new UnauthorizedException("Invalid credentials");
 
-    // Placeholder logic: replace with real password hash check
+    // Replace with real password check
     const isPasswordValid = password === user.passwordHash;
-    if (!isPasswordValid) return null;
+    if (!isPasswordValid)
+      throw new UnauthorizedException("Invalid credentials");
 
     return { ...user, videoHandles: user.videoHandles ?? [] };
   }
 
-  /**
-   * Generate JWT token for authenticated user
-   */
-  async generateJwt(user: User): Promise<string> {
-    // Placeholder implementation
+  async generateJwt(user: SafeUser): Promise<string> {
     return `token-for-${user.id}`;
   }
 
-  /**
-   * Verify email token
-   */
   async verifyEmail(token: string): Promise<boolean> {
-    // Minimal placeholder implementation to satisfy TS + ESLint
     return token.length > 0;
   }
 
-  /**
-   * OAuth login stub (Google etc.)
-   */
-  async oauthLogin(providerCode: string): Promise<User> {
-    // Example stub to satisfy linting
+  async oauthLogin(providerCode: string): Promise<SafeUser> {
     const defaultLanguage = await this.db.query.languages.findFirst({
       where: eq(schema.languages.code, "en"),
     });
-
     if (!defaultLanguage) throw new UnauthorizedException("Invalid OAuth flow");
 
     const [newUser] = await this.db
