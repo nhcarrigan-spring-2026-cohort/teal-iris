@@ -1,8 +1,7 @@
-// apps/backend/src/modules/auth/strategies/google.strategy.ts
 import { Injectable, Logger } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy, Profile } from "passport-google-oauth20";
-import { UsersService, User } from "../../users/users.service";
+import { UsersService, User } from "../../users/users.service.js";
 import { ConfigService } from "@nestjs/config";
 
 @Injectable()

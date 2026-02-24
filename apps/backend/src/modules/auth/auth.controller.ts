@@ -1,5 +1,5 @@
 import { Controller, Post, Body } from "@nestjs/common";
-import { AuthService, SafeUser } from "./auth.service";
+import { AuthService, SafeUser } from "./auth.service.js";
 
 @Controller("auth")
 export class AuthController {

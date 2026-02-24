@@ -1,9 +1,8 @@
-// apps/backend/src/modules/auth/strategies/jwt.strategy.ts
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
-import { SafeUser } from "../auth.service";
+import { SafeUser } from "../auth.service.js";
 
 interface JwtPayload {
   sub: string;

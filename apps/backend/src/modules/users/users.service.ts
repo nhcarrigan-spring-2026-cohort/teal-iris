@@ -1,13 +1,12 @@
 import { Injectable, NotFoundException, Inject } from "@nestjs/common";
 import { eq, ne, and, count } from "drizzle-orm";
 import { NodePgDatabase } from "drizzle-orm/node-postgres";
-import * as schema from "../../db/schema";
-import { DRIZZLE } from "../../db/db.module";
-import { UpdateProfileDto } from "./dto/update-profile.dto";
-import { BrowseUsersQueryDto } from "./dto/browse-users-query.dto";
-import { users, languages } from "../../db/schema";
+import * as schema from "../../db/schema.js";
+import { DRIZZLE } from "../../db/db.module.js";
+import { UpdateProfileDto } from "./dto/update-profile.dto.js";
+import { BrowseUsersQueryDto } from "./dto/browse-users-query.dto.js";
+import { users, languages } from "../../db/schema.js";
 
-// User type
 export interface User {
   id: string;
   email: string;
@@ -23,7 +22,6 @@ export interface User {
   updatedAt: Date;
 }
 
-// SafeUser type for exposing without passwordHash
 export type SafeUser = Omit<User, "passwordHash">;
 
 @Injectable()
