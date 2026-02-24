@@ -1,9 +1,9 @@
 import { Injectable, Inject, UnauthorizedException } from "@nestjs/common";
 import { eq } from "drizzle-orm";
 import { NodePgDatabase } from "drizzle-orm/node-postgres";
-import * as schema from "../../db/schema.js";
-import { DRIZZLE } from "../../db/db.module.js";
-import { User } from "../users/users.service.js";
+import * as schema from "../../db/schema";
+import { DRIZZLE } from "../../db/db.module";
+import { User } from "../users/users.service";
 
 export type SafeUser = Omit<User, "passwordHash">;
 

@@ -5,7 +5,7 @@ import { Module, Global } from "@nestjs/common";
 import { drizzle } from "drizzle-orm/node-postgres";
 import pkg from "pg";
 const { Pool } = pkg;
-import * as schema from "./schema.js";
+import * as schema from "./schema";
 
 // This is a "token" we use to tell NestJS which dependency to inject
 export const DRIZZLE = "DRIZZLE";

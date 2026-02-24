@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
-import { ConnectionsService } from "./connections.service.js";
-import { ConnectionsController } from "./connections.controller.js";
-import { DbModule } from "../../db/db.module.js";
+import { ConnectionsService } from "./connections.service";
+import { ConnectionsController } from "./connections.controller";
+import { DbModule } from "../../db/db.module";
 
 @Module({
   imports: [DbModule],

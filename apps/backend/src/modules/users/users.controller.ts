@@ -1,8 +1,8 @@
 import { Controller, Get, Patch, Body, Query } from "@nestjs/common";
-import { UsersService } from "./users.service.js";
-import { UpdateProfileDto } from "./dto/update-profile.dto.js";
-import { BrowseUsersQueryDto } from "./dto/browse-users-query.dto.js";
-import { AuthGuard } from "../auth/guards/auth.guard.js";
+import { UsersService } from "./users.service";
+import { UpdateProfileDto } from "./dto/update-profile.dto";
+import { BrowseUsersQueryDto } from "./dto/browse-users-query.dto";
+import { AuthGuard } from "../auth/guards/auth.guard";
 import { UseGuards, Req as Request } from "@nestjs/common";
 
 @Controller("users")

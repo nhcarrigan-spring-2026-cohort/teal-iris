@@ -1,7 +1,7 @@
 import { Controller, Post, Body, UseGuards, Request } from "@nestjs/common";
-import { ConnectionsService } from "./connections.service.js";
-import { CreateConnectionDto } from "./dto/create-connection.dto.js";
-import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard.js";
+import { ConnectionsService } from "./connections.service";
+import { CreateConnectionDto } from "./dto/create-connection.dto";
+import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 
 @Controller("connections")
 export class ConnectionsController {

@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
-import { UsersController } from "./users.controller.js";
-import { UsersService } from "./users.service.js";
-import { DbModule } from "../../db/db.module.js"; // Needed for DRIZZLE injection
+import { UsersController } from "./users.controller";
+import { UsersService } from "./users.service";
+import { DbModule } from "../../db/db.module"; // Needed for DRIZZLE injection
 
 @Module({
   imports: [DbModule], // Makes DRIZZLE available to UsersService

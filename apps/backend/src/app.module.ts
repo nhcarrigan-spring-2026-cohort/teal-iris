@@ -2,12 +2,12 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
-import { AppController } from "./app.controller.js"; // ESM-compatible
-import { HealthController } from "./modules/health/health.controller.js"; // include HealthController
-import { AuthModule } from "./modules/auth/auth.module.js";
-import { DbModule } from "./db/db.module.js";
-import { UsersModule } from "./modules/users/users.module.js";
-import { ConnectionsModule } from "./modules/connections/connections.module.js";
+import { AppController } from "./app.controller"; // ESM-compatible
+import { HealthController } from "./modules/health/health.controller"; // include HealthController
+import { AuthModule } from "./modules/auth/auth.module";
+import { DbModule } from "./db/db.module";
+import { UsersModule } from "./modules/users/users.module";
+import { ConnectionsModule } from "./modules/connections/connections.module";
 
 @Module({
   imports: [

@@ -7,10 +7,10 @@ import {
 } from "@nestjs/common";
 import { eq, and, or } from "drizzle-orm";
 import { NodePgDatabase } from "drizzle-orm/node-postgres";
-import * as schema from "../../db/schema.js";
-import { DRIZZLE } from "../../db/db.module.js";
-import { connections, users } from "../../db/schema.js";
-import { CreateConnectionDto } from "./dto/create-connection.dto.js";
+import * as schema from "../../db/schema";
+import { DRIZZLE } from "../../db/db.module";
+import { connections, users } from "../../db/schema";
+import { CreateConnectionDto } from "./dto/create-connection.dto";
 
 @Injectable()
 export class ConnectionsService {

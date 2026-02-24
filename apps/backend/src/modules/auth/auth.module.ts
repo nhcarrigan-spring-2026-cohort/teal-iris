@@ -5,11 +5,11 @@ import { JwtModule, JwtModuleOptions } from "@nestjs/jwt";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import path from "path";
 
-import { AuthController } from "./auth.controller.js";
-import { AuthService } from "./auth.service.js";
-import { JwtStrategy } from "./jwt.strategy.js";
-import { GoogleStrategy } from "./strategies/google.strategy.js";
-import { UsersModule } from "../users/users.module.js";
+import { AuthController } from "./auth.controller";
+import { AuthService } from "./auth.service";
+import { JwtStrategy } from "./jwt.strategy";
+import { GoogleStrategy } from "./strategies/google.strategy";
+import { UsersModule } from "../users/users.module";
 
 @Module({
   imports: [
