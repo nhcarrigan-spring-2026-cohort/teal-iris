@@ -16,7 +16,6 @@ export function SignInPage() {
 
   function onGoogleSignIn(e: React.FormEvent) {
     e.preventDefault();
-    console.log("GOOGLE SIGN IN CLICKED");
 
     // Redirect to Google OAuth endpoint
     window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
@@ -70,14 +69,13 @@ export function SignInPage() {
             <button
               type="submit"
               disabled={disabled}
-              className="w-full rounded-lg bg-teal-500 px-4 py-2.5 font-medium text-slate-950 hover:bg-teal-400 disabled:opacity-60"
+              className="relative flex w-full items-center justify-center gap-3 rounded-lg bg-white px-4 py-2.5 font-medium text-slate-950 shadow-md hover:bg-slate-50 hover:shadow-lg transition-shadow duration-150"
             >
               Sign In
             </button>
             <button
               type="button"
               onClick={onGoogleSignIn}
-              // disabled={disabled}
               className="relative w-full rounded-lg bg-white px-4 py-2.5 font-medium text-slate-950 hover:bg-white opacity-60 hover:opacity-90 flex items-center justify-center gap-3"
             >
               <Google />
