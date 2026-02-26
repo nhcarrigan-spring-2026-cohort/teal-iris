@@ -8,6 +8,7 @@ import { AuthModule } from "./modules/auth/auth.module.js";
 import { DbModule } from "./db/db.module.js";
 import { UsersModule } from "./modules/users/users.module.js";
 import { ConnectionsModule } from "./modules/connections/connections.module.js";
+import { ChatModule } from "./modules/chat/chat.module.js";
 
 // -------------------------------
 // APP MODULE
@@ -22,6 +23,7 @@ import { ConnectionsModule } from "./modules/connections/connections.module.js";
     AuthModule,
     UsersModule,
     ConnectionsModule,
+    ChatModule,
   ],
   controllers: [HealthController],
   providers: [],
