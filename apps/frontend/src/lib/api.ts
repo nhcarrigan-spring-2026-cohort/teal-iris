@@ -1,4 +1,3 @@
-// apps/frontend/src/lib/api.ts
 import axios from "axios";
 import { useAuthStore } from "../store/useAuthStore";
 import { UserProfile } from "../components/userCard/userCard";
