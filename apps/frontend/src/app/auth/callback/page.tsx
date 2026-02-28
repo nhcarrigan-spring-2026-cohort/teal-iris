@@ -46,7 +46,6 @@ export  function AuthCallbackContent() {
     const user = decodeToken(token);
 
     if (!user) {
-      console.error("Google login failed: could not decode token");
       router.replace("/login");
       return;
     }
