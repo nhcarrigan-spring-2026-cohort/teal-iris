@@ -2,8 +2,8 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { fetchUsers, LANGUAGES } from "@/lib/api";      // adjust import paths
-import { UserCard } from "@/components/userCard/userCard";        // adjust import paths
+import { fetchUsers, LANGUAGES } from "@/lib/api";      
+import { UserCard } from "@/components/userCard/userCard";        
 import { UserCardSkeleton } from "@/components/userCardSkeleton/userCardSkeleton";
 
 const PAGE_SIZE = 6;
