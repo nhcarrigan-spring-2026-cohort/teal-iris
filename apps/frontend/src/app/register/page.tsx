@@ -4,10 +4,12 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import {useRouter} from "next/navigation";
 import { LANGUAGES } from "../../lib/languages";
 import { TextField } from "../../components/forms/TextField";
 import { SelectField } from "../../components/forms/SelectField";
+
+
 
 
 const registerSchema = z
@@ -27,6 +29,7 @@ const registerSchema = z
 type RegisterForm = z.infer<typeof registerSchema>;
 
 export default function RegisterPage() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -43,11 +46,39 @@ export default function RegisterPage() {
     },
   });
 
-  async function onSubmit(values: RegisterForm) {
-    // API not ready yet per issue — keep it UI-only for now.
-    // You can log to verify behavior locally.
-    console.log("register submit", values);
+  const onSubmit = async (values: RegisterFormValues) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      }
+    );
+
+    const data = await res.json();
+
+    if (res.status === 409) {
+      alert("Email already exists");
+      return;
+    }
+
+    if (!res.ok) {
+      alert(data.message || "Registration failed");
+      return;
+    }
+
+    alert("Registration successful!");
+    router.push("/login");
+
+  } catch (error) {
+    alert("Network error");
+    console.error(error);
   }
+};
 
   return (
     <main className="min-h-[calc(100vh-0px)] bg-slate-950 text-white">
