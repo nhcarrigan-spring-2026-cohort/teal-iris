@@ -36,8 +36,6 @@ services:
       # Hot reload: sync source code
       - ./apps/backend/src:/app/apps/backend/src
       # Preserve node_modules in container
-      - /app/node_modules
-      - /app/apps/backend/node_modules
     command: pnpm --filter backend start:dev
 
   frontend:
@@ -47,15 +45,10 @@ services:
     container_name: teal-iris-frontend
     ports:
       - "3001:3000"
+    depends_on:
+      - backend
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:3000
-    volumes:
-      # Hot reload: sync source code
-      - ./apps/frontend:/app/apps/frontend
-      # Preserve node_modules and .next in container
-      - /app/node_modules
-      - /app/apps/frontend/node_modules
-      - /app/apps/frontend/.next
+      -  NEXT_PUBLIC_API_URL=http://localhost:3000
     command: pnpm --filter frontend dev
 
 volumes:

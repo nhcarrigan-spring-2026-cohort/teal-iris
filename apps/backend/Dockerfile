@@ -1,25 +1,19 @@
 FROM node:20-alpine
 
-# Install pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
-
-# Set working directory
 WORKDIR /app
 
-# Copy root workspace configuration
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+# Copy entire monorepo
+COPY . .
 
-# Copy backend package.json
-COPY apps/backend/package.json ./apps/backend/
+# Install pnpm
+RUN corepack enable
 
-# Install dependencies
-RUN pnpm install --frozen-lockfile
+# Install all workspace deps
+RUN pnpm install
 
-# Copy backend source code
-COPY apps/backend ./apps/backend
+# Move into backend folder
+WORKDIR /app/apps/backend
 
-# Expose port
-EXPOSE 3000
+EXPOSE 3001
 
-# Start development server with hot reload
 CMD ["pnpm", "--filter", "backend", "start:dev"]

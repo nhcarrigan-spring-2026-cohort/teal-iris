@@ -16,7 +16,7 @@ import { ConnectionsModule } from "./modules/connections/connections.module.js";
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: "../../.env",
+      envFilePath: "../.env",
     }),
     DbModule,
     AuthModule,
