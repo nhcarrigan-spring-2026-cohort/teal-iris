@@ -1,5 +1,17 @@
-# teal-iris
-Repository for Team teal-iris - Spring 2026 Cohort. It is structured as a monorepo containing both the backend and frontend applications.
+# Community Language Exchange
+
+Connecting cultures through conversation.
+
+[![Languages Supported](https://img.shields.io/badge/Languages%20Supported-54-brightgreen?style=for-the-badge&logo=googletranslate&logoColor=white)](apps/backend/src/db/seed_languages.ts)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
+
+---
+
+The concept is simple: **Everyone teaches, everyone learns.** Whether you're swapping English for Spanish or Mandarin for French, we handle the matchmaking that turns strangers into language partners.
+
+
+
+
 
 ## Tech Stack
 
