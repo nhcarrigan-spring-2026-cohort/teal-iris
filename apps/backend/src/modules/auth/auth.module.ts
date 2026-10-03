@@ -9,7 +9,8 @@ import { AuthController } from "./auth.controller.js";
 import { AuthService } from "./auth.service.js";
 import { LocalStrategy } from "./strategies/local.strategy.js";
 import { JwtStrategy } from "./strategies/jwt.strategy.js";
-//import { GoogleStrategy } from "./strategies/google.strategy.js";
+import { GoogleStrategy } from "./strategies/google.strategy.js";
+import { UsersModule } from "../users/users.module.js";
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { JwtStrategy } from "./strategies/jwt.strategy.js";
       envFilePath: path.resolve(process.cwd(), "../../.env"), // root .env
     }),
     PassportModule,
+    UsersModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -47,11 +49,7 @@ import { JwtStrategy } from "./strategies/jwt.strategy.js";
     }),
   ],
   controllers: [AuthController],
-  providers: [
-    AuthService,
-    LocalStrategy,
-    JwtStrategy, //GoogleStrategy
-  ],
+  providers: [AuthService, LocalStrategy, JwtStrategy, GoogleStrategy],
   exports: [AuthService, JwtModule],
 })
 export class AuthModule {}

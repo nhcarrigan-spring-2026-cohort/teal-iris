@@ -2,12 +2,16 @@ import { Injectable, Logger } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy, Profile } from "passport-google-oauth20";
 import { ConfigService } from "@nestjs/config";
+import { UsersService } from "../../users/users.service.js";
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
   private readonly logger = new Logger(GoogleStrategy.name);
 
-  constructor(private configService: ConfigService) {
+  constructor(
+    private configService: ConfigService,
+    private usersService: UsersService,
+  ) {
     const clientID = configService.get<string>("GOOGLE_CLIENT_ID")!;
     const clientSecret = configService.get<string>("GOOGLE_CLIENT_SECRET")!;
     const callbackURL = configService.get<string>("GOOGLE_CALLBACK_URL")!;
@@ -26,10 +30,19 @@ export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
     });
   }
 
-  async validate(accessToken: string, profile: Profile) {
-    return {
-      email: profile.emails?.[0]?.value,
-      name: profile.displayName,
-    };
+  async validate(accessToken: string, refreshToken: string, profile: Profile) {
+    const email = profile.emails?.[0]?.value;
+
+    if (!email) {
+      throw new Error("No email found in Google profile");
+    }
+
+    const existingUser = await this.usersService.findByEmail(email);
+
+    if (existingUser) {
+      return existingUser;
+    }
+
+    return this.usersService.createUser(email, profile.displayName);
   }
 }

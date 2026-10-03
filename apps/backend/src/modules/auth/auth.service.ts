@@ -137,10 +137,16 @@ export class AuthService {
     return result;
   }
 
-  async login(user: SafeUser) {
+  private generateJwt(user: SafeUser): string {
     const payload = { email: user.email, sub: user.id };
+    return this.jwtService.sign(payload);
+  }
+
+  async login(user: SafeUser) {
+    const accessToken = this.generateJwt(user);
+
     return {
-      accessToken: this.jwtService.sign(payload),
+      accessToken,
       user: {
         id: user.id,
         email: user.email,
