@@ -13,6 +13,7 @@ import {
   Query,
 } from "@nestjs/common";
 
+import { ConfigService } from "@nestjs/config";
 import { AuthGuard } from "@nestjs/passport";
 import type { Request as ExpressRequest, Response } from "express";
 import { AuthService, SafeUser } from "./auth.service.js";
@@ -23,7 +24,10 @@ import { JwtAuthGuard } from "./guards/jwt-auth.guard.js";
 
 @Controller("auth")
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly configService: ConfigService,
+  ) {}
 
   // --- Local Auth ---
 
@@ -58,16 +62,16 @@ export class AuthController {
 
   @Get("google/callback")
   @UseGuards(AuthGuard("google"))
-  async googleAuthCallback(@Req() req: ExpressRequest, @Res() res: Response) {
+  async googleAuthCallback(
+    @Req() req: ExpressRequest & { user: SafeUser },
+    @Res() res: Response,
+  ) {
     // req.user is populated by GoogleStrategy validate()
-    // For now, we follow the existing redirect logic
-    // res.redirect(`http://localhost:3000/auth/callback?token=FAKE_TOKEN`);
+    const result = await this.authService.login(req.user);
+    const frontendUrl =
+      this.configService.get<string>("FRONTEND_URL") || "http://localhost:3001";
 
-    // In a real scenario, we would generate a real JWT here:
-    const result = await this.authService.login(req.user as SafeUser);
-    res.redirect(
-      `http://localhost:3000/auth/callback?token=${result.accessToken}`,
-    );
+    res.redirect(`${frontendUrl}/auth/callback?token=${result.accessToken}`);
   }
 
   @Get("verify")

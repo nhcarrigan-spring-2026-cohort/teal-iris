@@ -12,6 +12,40 @@ import { BrowseUsersQueryDto } from "./dto/browse-users-query.dto.js";
 export class UsersService {
   constructor(@Inject(DRIZZLE) private db: NodePgDatabase<typeof schema>) {}
 
+  async findByEmail(email: string) {
+    return this.db.query.users.findFirst({
+      where: eq(users.email, email),
+    });
+  }
+
+  async createUser(email: string, name?: string) {
+    const nameParts = (name ?? "").trim().split(/\s+/);
+    const firstName = nameParts[0] || null;
+    const lastName = nameParts.slice(1).join(" ") || null;
+
+    const defaultLanguage = await this.db.query.languages.findFirst({
+      where: eq(languages.code, "en"),
+    });
+
+    if (!defaultLanguage) {
+      throw new Error("Default language 'en' not found");
+    }
+
+    const [newUser] = await this.db
+      .insert(users)
+      .values({
+        email,
+        passwordHash: "",
+        firstName,
+        lastName,
+        nativeLanguageId: defaultLanguage.id,
+        targetLanguageId: defaultLanguage.id,
+      })
+      .returning();
+
+    return newUser;
+  }
+
   async browseUsers(currentUserId: string, query: BrowseUsersQueryDto) {
     const { page = 1, limit = 10, learning, speaking } = query;
     const offset = (page - 1) * limit;
